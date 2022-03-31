@@ -30,6 +30,9 @@
  * @type {Array.<task>}
  * @global
  */
+
+ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
+
 let tasks = [];
 
 /**
