@@ -90,8 +90,37 @@ async function loadTasks() {
 
 
 /**
+ * @todo complete function
  * Renders all tasks
  */
 function renderTasks() {
+    let i = -1;
+    //iterates through all tasks
+    for (const task of tasks) {
 
+        renderTask(i++, task.title, task.description, task.status, task.due_date, task.urgency, task.assigned_to);
+        
+    }
+
+}
+
+
+/**
+ * @todo complete function
+ * renders one task
+ * @param {*} idx           - Index of current task  
+ * @param {*} title         - task title 
+ * @param {*} description   - task description
+ * @param {*} status        - task status
+ * @param {*} due_date      
+ * @param {*} urgency 
+ * @param {*} assigned_to 
+ * @returns 
+ */
+function renderTask(idx, title, description, status, due_date, urgency, assigned_to) {
+    return /*html*/`
+        <div id="task_${idx}" class="task-card">
+                    
+                </div>
+    `;
 }
