@@ -1,0 +1,86 @@
+/* css for kanban board*/
+:root {
+    --bg-color1: white;
+    --color-shadow-black: rgba(0, 0, 0, 0.3);
+    --color-nonurgent: rgb(240, 235, 254);
+    --color-urgent: rgb(210, 195, 255);
+}
+
+body {
+    background-color: var(--bg-color1);
+    height: 100vh;
+    width: 100%;
+}
+
+.board {
+    width: 100%;
+    height: 100vh;
+    padding: 3rem 2rem;
+}
+
+.status-panel, .status-content {
+    position: relative;
+    background-color: rgb(245, 243, 250);
+}
+
+.status-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.row {
+    width: 100%;
+}
+
+.col {
+    width: 20%;
+}
+
+.caption {
+    background-color: var(--bg-color1);
+    text-align: center;
+}
+
+.tasks {
+    height: 95%;
+    display: flex;
+    justify-content: center;
+}
+
+.task-card {
+    display: inline;
+    padding: 5px 10px;
+    max-width: 90%;
+    border: 1px solid var(--color-shadow-black);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px var(--color-shadow-black);
+    font-size: smaller;
+    margin-bottom: 4px;
+    background-color: var(--color-nonurgent);
+}
+
+.status-content .task-card:first-child {
+    margin-top: 5px;
+} 
+
+.task-card p {
+    margin-bottom: 4px;
+}
+
+.title {
+    font-weight: bold;
+    border-bottom: 1px solid var(--color-shadow-black);
+}
+
+.assigned {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.urgent {
+    background-color: var(--color-urgent);
+}

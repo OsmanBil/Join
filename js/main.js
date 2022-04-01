@@ -92,33 +92,50 @@ async function loadTasks() {
  * Renders all tasks
  */
 function renderTasks() {
-    let i = -1;
+    let i = 0;
     //iterates through all tasks
     for (const task of tasks) {
-
-        renderTask(i++, task.title, task.description, task.status, task.due_date, task.urgency, task.assigned_to);
-        
+        renderTaskCard(i++, task.title, task.description, task.status, task.due_date, task.urgency, task.assigned_to);
     }
 
 }
 
 
 /**
- * @todo complete function
- * renders one task
- * @param {*} idx           - Index of current task  
- * @param {*} title         - task title 
- * @param {*} description   - task description
- * @param {*} status        - task status
- * @param {*} due_date      
- * @param {*} urgency 
- * @param {*} assigned_to 
- * @returns 
+ * renders one task as a card
+ * @param {number} idx                  - Index of current task  
+ * @param {string} title                - task title 
+ * @param {string} description          - task description
+ * @param {boolean} urgency             - task urgency
+ * @param {Array.<user>} assigned_to    - assignees
+ * @param {number} limitTitle           - limit (how many characters to show) in case of cut off title
+ * @param {number} limitDescription     - limit (how many characters to show) in case of cut off description  
+ * @returns {string} - html code that represents a task card (e.g. for the board)
  */
-function renderTask(idx, title, description, status, due_date, urgency, assigned_to) {
+function renderTaskCard(idx, title, description, urgency, assigned_to, limitTitle, limitDescription) {
     return /*html*/`
-        <div id="task_${idx}" class="task-card">
-                    
-                </div>
+        <div id="task_${idx}" class="task-card${(urgency) ? ' urgent' : ''}" draggable="true">
+            <p id="title_${idx}" class="title">${(limitTitle) ? title.substring(0, limitTitle) : title}</p>
+            <p id="desc_${idx}">${(limitDescription) ? description.substring(0, limitDescription) : description}</p>
+            <div id="assigned_${idx}" class="assigned">${renderAssignees(assigned_to)}</div>
+        </div>
     `;
+}
+
+
+/**
+ * Renders assignees of a task.
+ * @param {*} assigned_to   - assignees
+ * @returns {string} - html code (icons) that represents the assignees. If there is no assignee, this function returns empty string.
+ */
+function renderAssignees(assigned_to) {
+    let tmp = '';
+
+    for (user of assigned_to) {
+        tmp += /*html*/`
+            <img class="img-assignee" src="${user.img}">
+        `;
+    }
+
+    return tmp;
 }
