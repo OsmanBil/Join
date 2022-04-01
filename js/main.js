@@ -10,7 +10,8 @@
 
 /**
  * @typedef {object} task                   - stores a task
- * @property {string} title                 - task title
+* @property {number} id                     - unique id of a task 
+* @property {string} title                 - task title
  * @property {string} description           - task description
  * @property {string} status                - current task status
  * @property {Date} due_date                - deadline for implementation
@@ -37,7 +38,7 @@
  * @function setURL
  * @description - This function sets the link to backend storage
  */
- setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
+setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 
 /**
  * @global
@@ -46,24 +47,51 @@
  */
 let tasks = [];
 
-/**
- * @global
- */
-let task = {
-    'title': null,
-    'description': null,
-    'status': null,
-    'due_date': null,
-    'urgency': null,
-    'assigned_to': []
-};
+
+// /**
+//  * @global
+//  */
+// let task = {
+//     'title': null,
+//     'description': null,
+//     'status': null,
+//     'due_date': null,
+//     'urgency': null,
+//     'assigned_to': []
+// };
 
 /**
  * stores possible status of a task
  * @type {Array.<string>}
  * @global
  */
-const status = ['backlog', 'todo', 'progress', 'testing', 'done'];
+const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
+
+function insertSampleData() {
+    tasks = [
+        {
+            'id': 1,
+            'title': 'Task 1',
+            'description': 'Diese Task habe ich für Testzwecke angelegt.',
+            'status': taskStatus[2],
+            'due_date': new Date('December 17, 2022'),
+            'urgency': false,
+            'assigned_to': ['Andreas']
+        },
+        {
+            'id': 2,
+            'title': 'Task 2',
+            'description': 'Diese dringende Task habe ich auch für Testzwecke angelegt.',
+            'status': taskStatus[3],
+            'due_date': new Date('May 12, 2022'),
+            'urgency': true,
+            'assigned_to': ['Andreas']
+        }
+    ]
+
+    backend.setItem('tasks', tasks);    //store sample data
+    alert('Daten im Backend mit dem key = "tasks" gespeichert.');
+}
 
 
 /**
@@ -90,49 +118,23 @@ const users = [
 ];
 
 
+/**
+ * Functionality to run if index.html is opened 
+ */
+function init() {
+    includeHTML();
+    loadTasks();
+}
+
 
 /**
  * Loads stored tasks from backend server
  * @async
  */
 async function loadTasks() {
+    const data = await backend.getItem('tasks');
 
-}
-
-
-/**
- * @todo complete function
- * Renders all tasks
- */
-function renderTasks() {
-    let i = 0;
-    //iterates through all tasks
-    for (const task of tasks) {
-        renderTaskCard(i++, task.title, task.description, task.status, task.due_date, task.urgency, task.assigned_to);
-    }
-
-}
-
-
-/**
- * renders one task as a card
- * @param {number} idx                  - Index of current task  
- * @param {string} title                - task title 
- * @param {string} description          - task description
- * @param {boolean} urgency             - task urgency
- * @param {Array.<user>} assigned_to    - assignees
- * @param {number} limitTitle           - limit (how many characters to show) in case of cut off title
- * @param {number} limitDescription     - limit (how many characters to show) in case of cut off description  
- * @returns {string} - html code that represents a task card (e.g. for the board)
- */
-function renderTaskCard(idx, title, description, urgency, assigned_to, limitTitle, limitDescription) {
-    return /*html*/`
-        <div id="task_${idx}" class="task-card${(urgency) ? ' urgent' : ''}" draggable="true">
-            <p id="title_${idx}" class="title">${(limitTitle) ? title.substring(0, limitTitle) : title}</p>
-            <p id="desc_${idx}">${(limitDescription) ? description.substring(0, limitDescription) : description}</p>
-            <div id="assigned_${idx}" class="assigned">${renderAssignees(assigned_to)}</div>
-        </div>
-    `;
+    tasks = data || []; // fill local variable tasks with all stored tasks
 }
 
 
@@ -172,8 +174,10 @@ function hideElement(elementID) {
 
 
 /**
- * Opens the kanban board section
+ * 
+ * @param {string} status - Wanted task status
+ * @returns {Array.<task>}  - Returns an array of tasks with the wanted status
  */
-function openBoard() {
-    displayElement('board');
+function filterTasksByStatus(status) {
+    return tasks.filter(t => t.status === status);
 }

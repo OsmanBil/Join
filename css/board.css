@@ -84,3 +84,7 @@ body {
 .urgent {
     background-color: var(--color-urgent);
 }
+
+.border-solid {
+    border: 1px solid var(--color-urgent);
+}
