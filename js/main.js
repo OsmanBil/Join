@@ -181,3 +181,19 @@ function hideElement(elementID) {
 function filterTasksByStatus(status) {
     return tasks.filter(t => t.status === status);
 }
+
+
+/**
+ * Extracts the ID of an ID of html element.
+ * Preconditions: the ID of the html element (elementID) has to be in format: Name_ID  
+ * @param {string} elementID - ID of a html element
+ * @returns {number} - Returns the ID as a number.
+ */
+function getIndexFromElementID(elementID) {
+    if (elementID) {
+    let tmp = elementID.split('_');
+    return +tmp[tmp.length - 1];
+    } else {
+        return;
+    }
+}
