@@ -31,6 +31,19 @@
  * @global
  */
 
+
+/**
+ * @global
+ * @function setURL
+ * @description - This function sets the link to backend storage
+ */
+ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
+
+/**
+ * @global
+ * @name tasks
+ * @description - Storage for all tasks
+ */
 let tasks = [];
 
 /**
