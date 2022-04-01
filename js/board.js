@@ -59,10 +59,13 @@ function drag(ev) {
 
 function drop(ev) {
     ev.preventDefault();
+    const elementIDSource = ev.dataTransfer.getData('text');
+    const elementIDTarget = ev.target.id;
 
-    let sourceElement = document.getElementById(ev.dataTransfer.getData('text'));
-    let targetElement = document.getElementById(ev.target.id);
+    let targetElement = document.getElementById(elementIDTarget);
 
-    targetElement.appendChild(sourceElement);
+    tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
     targetElement.classList.remove('border-solid');
+
+    showTasksOnBoard();
 }

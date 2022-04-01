@@ -70,7 +70,7 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
 function insertSampleData() {
     tasks = [
         {
-            'id': 1,
+            'id': 0,
             'title': 'Task 1',
             'description': 'Diese Task habe ich für Testzwecke angelegt.',
             'status': taskStatus[2],
@@ -79,7 +79,7 @@ function insertSampleData() {
             'assigned_to': ['Andreas']
         },
         {
-            'id': 2,
+            'id': 1,
             'title': 'Task 2',
             'description': 'Diese dringende Task habe ich auch für Testzwecke angelegt.',
             'status': taskStatus[3],
