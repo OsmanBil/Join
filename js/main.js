@@ -152,3 +152,28 @@ function renderAssignees(assigned_to) {
 
     return tmp;
 }
+
+/**
+ * - Displays a html element.
+ * @param {string} elementID - The ID of html element to be displayed.
+ */
+function displayElement(elementID) {
+    document.getElementById(elementID).classList.remove('d-none');
+}
+
+
+/**
+ * - Hides a html element.
+ * @param {string} elementID - The ID of html element to be hidden.
+ */
+function hideElement(elementID) {
+    document.getElementById(elementID).classList.add('d-none');
+}
+
+
+/**
+ * Opens the kanban board section
+ */
+function openBoard() {
+    displayElement('board');
+}
