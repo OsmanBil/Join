@@ -75,7 +75,7 @@ function insertSampleData() {
             'status': taskStatus[2],
             'due_date': new Date('December 17, 2022'),
             'urgency': false,
-            'assigned_to': ['Andreas']
+            'assigned_to': [users[0], users[1], users[2]]
         },
         {
             'id': 1,
@@ -84,7 +84,7 @@ function insertSampleData() {
             'status': taskStatus[3],
             'due_date': new Date('May 12, 2022'),
             'urgency': true,
-            'assigned_to': ['Andreas']
+            'assigned_to': [users[2]]
         }
     ]
 
@@ -104,17 +104,17 @@ const users = [
     {
         'name': 'Raphael Konopatzki',
         'mail': 'mail1@mail.de',
-        'img': null
+        'img': 'img/a.png'
     },
     {
         'name': 'Osman Bilgin',
         'mail': 'mail2@mail.de',
-        'img': null
+        'img': 'img/b.png'
     },
     {
         'name': 'Andreas Komor',
         'mail': 'mail3@mail.de',
-        'img': null
+        'img': 'img/c.png'
     }
 ];
 
@@ -170,7 +170,7 @@ function renderAssignees(assigned_to) {
 
     for (user of assigned_to) {
         tmp += /*html*/`
-            <img class="img-assignee" src="${user.img}">
+            <img class="img-assignee" src="${user.img}" alt="${user.name}">
         `;
     }
 
