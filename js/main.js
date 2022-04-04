@@ -202,7 +202,7 @@ function getIndexFromElementID(elementID) {
 /**
  * - Switches between views in one pager: iterates through all views, displays the wanted view and hides the rest.
  * - Preconditions: the view to be displayed has to have the class name "view".
- * @param {string} viewID - View to be displayed. 
+ * @param {string} viewID - ElementID of the view to be displayed. 
  */
 function openView(viewID) {
     let views = document.getElementsByClassName('view');
