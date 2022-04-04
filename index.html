@@ -31,10 +31,11 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
     <button onclick="insertSampleData()">Testdaten speichern (Variable 'tasks')</button>
     <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
     <div id="dsgvo" class="view container px-0 py-3 d-none" w3-include-html="templates/dsgvo.html"></div>
+    <div id="imprint" class="view container px-0 py-3 d-none" w3-include-html="templates/imprint.html"></div>
     
     <footer class="footer">
         <nav class="policies">
-            <a href="#" class="imprint" title="Impressum">Impressum</a>
+            <a href="#" class="imprint" title="Impressum" onclick="openView('imprint')">Impressum</a>
             <a href="#" class="dsgvo" title="Datenschutz" onclick="openView('dsgvo')">Datenschutz</a>
         </nav>
     </footer>

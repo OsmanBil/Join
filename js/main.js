@@ -102,18 +102,18 @@ function insertSampleData() {
  */
 const users = [
     {
-        'name': 'Raphael Konopatzki',
-        'mail': 'mail1@mail.de',
+        'name': 'Batman',
+        'mail': 'batman@mail.de',
         'img': 'img/a.png'
     },
     {
-        'name': 'Osman Bilgin',
-        'mail': 'mail2@mail.de',
+        'name': 'Grinch',
+        'mail': 'grinch@mail.de',
         'img': 'img/b.png'
     },
     {
-        'name': 'Andreas Komor',
-        'mail': 'mail3@mail.de',
+        'name': 'Spider Man',
+        'mail': 'spider@mail.de',
         'img': 'img/c.png'
     }
 ];
