@@ -200,7 +200,7 @@ function getIndexFromElementID(elementID) {
 
 
 /**
- * - Iterates through all views, displays the wanted view and hides the rest.
+ * - Switches between views in one pager: iterates through all views, displays the wanted view and hides the rest.
  * - Preconditions: the view to be displayed has to have the class name "view".
  * @param {string} viewID - View to be displayed. 
  */
