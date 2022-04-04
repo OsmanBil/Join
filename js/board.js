@@ -64,7 +64,8 @@ function drop(ev) {
 
     let targetElement = document.getElementById(elementIDTarget);
 
-    tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    //tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
     targetElement.classList.remove('border-solid');
 
     showTasksOnBoard();

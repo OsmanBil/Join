@@ -47,7 +47,6 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
  */
 let tasks = [];
 
-
 // /**
 //  * @global
 //  */
@@ -91,6 +90,8 @@ function insertSampleData() {
 
     backend.setItem('tasks', tasks);    //store sample data
     alert('Daten im Backend mit dem key = "tasks" gespeichert.');
+
+    loadTasks();
 }
 
 
@@ -133,7 +134,7 @@ function init() {
  */
 async function loadTasks() {
     await downloadFromServer();
-    tasks = JSON.parse(backend.getItem('tasks')) || []; // fill local variable tasks with all stored tasks
+    tasks = backend.getItem('tasks') || []; // fill local variable tasks with all stored tasks
 }
 
 
@@ -144,17 +145,24 @@ async function loadTasks() {
  */
 function getNewTaskID() {
     const tmp = [];
-    for (let task of tasks) {
-            tmp.push(task.id);
+
+    if (tasks.length === 0) {   //ID=1 if first task
+        return 1;
     }
 
-    return (Math.max(tmp) + 1);
+    for (const task of tasks) {
+            if (task && Number.isInteger(task.id)) { //only if task exists and ID is a number
+                tmp.push(Number(task.id));
+            }
+    }
+
+    return Math.max(...tmp) + 1;
 }
 
 
 /**
  * Renders assignees of a task.
- * @param {*} assigned_to   - assignees
+ * @param {Array.<string>} assigned_to   - assignees
  * @returns {string} - html code (icons) that represents the assignees. If there is no assignee, this function returns empty string.
  */
 function renderAssignees(assigned_to) {
@@ -211,6 +219,23 @@ function getIndexFromElementID(elementID) {
         return;
     }
 }
+
+
+/**
+ * - Gets a task from a ElementID (preconditions: element id has to be in format: name_id)
+ * or from a TaskID 
+ * @param {(string | number)} taskIDOrElementID - If string -> ID of a html element assumed,
+ * if number -> ID of task assumed
+ * @returns {task} - Returns a task with wanted ID
+ */
+function getTaskFromTaskID(taskIDOrElementID) {
+    if (typeof taskIDOrElementID === 'string') {
+        return tasks.filter(t => t.id === getIndexFromElementID(taskIDOrElementID))[0];
+    } else if (typeof taskIDOrElementID === 'number') {
+        return tasks.filter(t => t.id === taskIDOrElementID.toFixed())[0];
+    }
+}
+
 
 
 /**
