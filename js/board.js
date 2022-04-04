@@ -3,7 +3,7 @@
  */
 function openBoard() {
     showTasksOnBoard();
-    displayElement('board');
+    openView('board');
 }
 
 

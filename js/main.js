@@ -197,3 +197,21 @@ function getIndexFromElementID(elementID) {
         return;
     }
 }
+
+
+/**
+ * - Iterates through all views, displays the wanted view and hides the rest.
+ * - Preconditions: the view to be displayed has to have the class name "view".
+ * @param {string} viewID - View to be displayed. 
+ */
+function openView(viewID) {
+    let views = document.getElementsByClassName('view');
+
+    for (const view of views) {
+        if (view.id === viewID) {
+            displayElement(view.id);
+        } else {
+            hideElement(view.id);
+        }
+    }
+}
