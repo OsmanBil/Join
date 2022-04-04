@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @author Osman Bilgin, Raphael Konopatzki, Andreas Komor
+ * @description To generate such JS documentation by JSDoc in html format:
+ * 1. open VSCode
+ * 2. open terminal
+ * 3. go to the subfolder of your js files
+ * 4. type: jsdoc . (for all files) or jsdoc [filename]
+ * JSDoc generates a html documentation in the subfolder /out
+ */
+
+/**
+ * @typedef {object} task                   - stores a task
+* @property {number} id                     - unique id of a task 
+* @property {string} title                 - task title
+ * @property {string} description           - task description
+ * @property {string} status                - current task status
+ * @property {Date} due_date                - deadline for implementation
+ * @property {boolean} urgency              - classification if urgent
+ * @property {Array.&lt;string>} assigned_to   - whom is the task assigned to
+ */
+
+/**
+ * @typedef {object} user                   - stores a user
+ * @property {string} name                  - name user
+ * @property {string} mail                  - mail address user
+ * @property {string} img                   - image user (file path)
+ */
+
+/**
+ * storage of all tasks
+ * @type {Array.&lt;task>}
+ * @global
+ */
+
+
+/**
+ * @global
+ * @function setURL
+ * @description - This function sets the link to backend storage
+ */
+setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
+
+/**
+ * @global
+ * @name tasks
+ * @description - Storage for all tasks
+ */
+let tasks = [];
+
+
+// /**
+//  * @global
+//  */
+// let task = {
+//     'title': null,
+//     'description': null,
+//     'status': null,
+//     'due_date': null,
+//     'urgency': null,
+//     'assigned_to': []
+// };
+
+/**
+ * stores possible status of a task
+ * @type {Array.&lt;string>}
+ * @global
+ */
+const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
+
+function insertSampleData() {
+    tasks = [
+        {
+            'id': 0,
+            'title': 'Task 1',
+            'description': 'Diese Task habe ich für Testzwecke angelegt.',
+            'status': taskStatus[2],
+            'due_date': new Date('December 17, 2022'),
+            'urgency': false,
+            'assigned_to': ['Andreas']
+        },
+        {
+            'id': 1,
+            'title': 'Task 2',
+            'description': 'Diese dringende Task habe ich auch für Testzwecke angelegt.',
+            'status': taskStatus[3],
+            'due_date': new Date('May 12, 2022'),
+            'urgency': true,
+            'assigned_to': ['Andreas']
+        }
+    ]
+
+    backend.setItem('tasks', tasks);    //store sample data
+    alert('Daten im Backend mit dem key = "tasks" gespeichert.');
+}
+
+
+/**
+ * stores users
+ * @type {Array.&lt;user>}
+ * @global
+ */
+const users = [
+    {
+        'name': 'Raphael Konopatzki',
+        'mail': 'mail1@mail.de',
+        'img': null
+    },
+    {
+        'name': 'Osman Bilgin',
+        'mail': 'mail2@mail.de',
+        'img': null
+    },
+    {
+        'name': 'Andreas Komor',
+        'mail': 'mail3@mail.de',
+        'img': null
+    }
+];
+
+
+/**
+ * Functionality to run if index.html is opened 
+ */
+function init() {
+    includeHTML();
+    loadTasks();
+}
+
+
+/**
+ * Loads stored tasks from backend server
+ * @async
+ */
+async function loadTasks() {
+    const data = await backend.getItem('tasks');
+
+    tasks = data || []; // fill local variable tasks with all stored tasks
+}
+
+
+/**
+ * Renders assignees of a task.
+ * @param {*} assigned_to   - assignees
+ * @returns {string} - html code (icons) that represents the assignees. If there is no assignee, this function returns empty string.
+ */
+function renderAssignees(assigned_to) {
+    let tmp = '';
+
+    for (user of assigned_to) {
+        tmp += /*html*/`
+            &lt;img class="img-assignee" src="${user.img}">
+        `;
+    }
+
+    return tmp;
+}
+
+/**
+ * - Displays a html element.
+ * @param {string} elementID - The ID of html element to be displayed.
+ */
+function displayElement(elementID) {
+    document.getElementById(elementID).classList.remove('d-none');
+}
+
+
+/**
+ * - Hides a html element.
+ * @param {string} elementID - The ID of html element to be hidden.
+ */
+function hideElement(elementID) {
+    document.getElementById(elementID).classList.add('d-none');
+}
+
+
+/**
+ * 
+ * @param {string} status - Wanted task status
+ * @returns {Array.&lt;task>}  - Returns an array of tasks with the wanted status
+ */
+function filterTasksByStatus(status) {
+    return tasks.filter(t => t.status === status);
+}
+
+
+/**
+ * Extracts the ID of an ID of html element.
+ * Preconditions: the ID of the html element (elementID) has to be in format: Name_ID  
+ * @param {string} elementID - ID of a html element
+ * @returns {number} - Returns the ID as a number.
+ */
+function getIndexFromElementID(elementID) {
+    if (elementID) {
+    let tmp = elementID.split('_');
+    return +tmp[tmp.length - 1];
+    } else {
+        return;
+    }
+}
+
+
+/**
+ * - Switches between views in one pager: iterates through all views, displays the wanted view and hides the rest.
+ * - Preconditions: the view to be displayed has to have the class name "view".
+ * @param {string} viewID - View to be displayed. 
+ */
+function openView(viewID) {
+    let views = document.getElementsByClassName('view');
+
+    for (const view of views) {
+        if (view.id === viewID) {
+            displayElement(view.id);
+        } else {
+            hideElement(view.id);
+        }
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setURL">setURL</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#users">users</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 04 2022 08:45:25 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
