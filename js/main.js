@@ -132,9 +132,8 @@ function init() {
  * @async
  */
 async function loadTasks() {
-    const data = await backend.getItem('tasks');
-
-    tasks = data || []; // fill local variable tasks with all stored tasks
+    await downloadFromServer();
+    tasks = JSON.parse(backend.getItem('tasks')) || []; // fill local variable tasks with all stored tasks
 }
 
 

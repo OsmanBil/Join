@@ -1,0 +1,69 @@
+body{
+    margin-top: 60px;
+}
+
+.card-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card-unit{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-right: 16px;
+    margin-left: 16px;
+    width: 40%;
+}
+
+.card-in{
+    display: flex;
+    flex-direction: row !important;
+}
+
+.bg-grey{
+    background-color: rgb(240, 240, 240);
+}
+
+.blue{
+    color: rgb(5, 5, 153);
+}
+
+.form-hight{
+    height: 100px !important;
+}
+
+.no-border{
+    border: none;
+}
+
+.card-unit img{
+    height: 54px;
+    width: 54px;
+    border-radius: 100%;
+}
+
+.assigned-to{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.disable{
+    display: none;
+}
+
+.buttons{
+    margin-top: 8px;
+    display: flex;
+    justify-content:flex-end;
+}
+
+.btn-assignet-to{
+    margin-right: 16px;
+    margin-left: 16px;
+}
+
+.profile{
+    min-height: 54px;
+}
