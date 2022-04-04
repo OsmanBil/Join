@@ -26,6 +26,14 @@
     <button onclick="openBoard()">Board anzeigen (Test)</button>
     <button onclick="insertSampleData()">Testdaten speichern (Variable 'tasks')</button>
     <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
+    <div id="dsgvo" class="view container px-0 py-3 d-none" w3-include-html="templates/dsgvo.html"></div>
+    
+    <footer class="footer">
+        <nav class="policies">
+            <a href="#" class="imprint" title="Impressum">Impressum</a>
+            <a href="#" class="dsgvo" title="Datenschutz" onclick="openView('dsgvo')">Datenschutz</a>
+        </nav>
+    </footer>
 </body>
 
 </html>
