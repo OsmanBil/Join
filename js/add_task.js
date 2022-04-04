@@ -38,7 +38,7 @@ function disableProfile(x) {
 }
 
 async function addTask() {
-    let id = 1;
+
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let category = document.getElementById('category');
@@ -48,13 +48,13 @@ async function addTask() {
     let urgencyText = urgency.options[urgency.selectedIndex].text;
 
     await downloadFromServer();
-    tasks = JSON.parse(backend.getItem('tasks')) || [];
+    tasks = await JSON.parse(backend.getItem('tasks')) || [];
 
 
 
     task =
     {
-        'id': id,
+        'id': getNewTaskID(),
         'title': title,
         'description': description,
         'category': categoryText,
