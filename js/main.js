@@ -138,6 +138,21 @@ async function loadTasks() {
 
 
 /**
+ * 
+ * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
+ * @example task.id = getNewTaskID();
+ */
+function getNewTaskID() {
+    const tmp = [];
+    for (let task of tasks) {
+            tmp.push(task.id);
+    }
+
+    return (Math.max(tmp) + 1);
+}
+
+
+/**
  * Renders assignees of a task.
  * @param {*} assigned_to   - assignees
  * @returns {string} - html code (icons) that represents the assignees. If there is no assignee, this function returns empty string.
