@@ -1,4 +1,9 @@
 /* main layout */
+body {
+    margin: 0;
+    font-family: 'PT Sans', sans-serif;
+}
+
 footer {
     position: fixed;
     bottom: 0;
