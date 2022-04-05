@@ -1,38 +1,35 @@
 <div id="backlog" class="backlog container px-0 py-3">
 
-    <div id="task-header" class="task-header row row-cols-3">
-        <div class="caption col col-3 mx-1 p-0">
-            ASSIGNED TO
-        </div>
-        <div class="caption col col-2 mx-1 p-0">
-            CATEGORY
-        </div>
-        <div class="caption col col-5 mx-1 p-0">
-            DETAILS
-        </div>
-    </div>
+    <table class="task-logs">
 
-    <div id="task-log_1" class="task-log row row-cols-3">
-        <div id="section-assignee_1" class="section-assignee col col-3 mx-1 p-0">
-            Batman
-        </div>
-        <div id="section-category_1" class="section-category col col-2 mx-1 p-0">
-            Marketing
-        </div>
-        <div id="section-details_1" class="section-details col col-5 mx-1 p-0">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium unde magnam sed, dicta deleniti exercitationem deserunt eum quaerat repellat atque. Magnam facilis ad molestias asperiores reprehenderit obcaecati ipsam qui adipisci.
-        </div>
-    </div>
+        <tr>
+            <th>ASSIGNED TO</th><th>CATEGORY</th><th>DETAILS</th>
+        </tr>
 
-    <div id="task-log_2" class="task-log row row-cols-3">
-        <div id="section-assignee_2" class="section-assignee col col-3 mx-1 p-0">
-            Batman
-        </div>
-        <div id="section-category_2" class="section-category col col-2 mx-1 p-0">
-            Marketing
-        </div>
-        <div id="section-details_2" class="section-details col col-5 mx-1 p-0">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium unde magnam sed, dicta deleniti exercitationem deserunt eum quaerat repellat atque. Magnam facilis ad molestias asperiores reprehenderit obcaecati ipsam qui adipisci.
-        </div>
-    </div>
+        <tr id="task-log_1" class="task-log">
+            <td class="assignees">
+                <img class="img-assignee" src="img/a.png">
+                <img class="img-assignee" src="img/b.png">
+            </td>
+            <td class="category">
+                Marketing
+            </td>
+            <td class="details">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla illo quaerat soluta quia vel cum repellendus molestias dolorum voluptatibus maiores sit sequi, laborum aliquam, incidunt similique? Natus eveniet quibusdam optio.
+            </td>
+        </tr>
+
+        <tr id="task-log_2" class="task-log">
+            <td class="assignees">
+                Grinch
+            </td>
+            <td class="category">
+                Product
+            </td>
+            <td class="details">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla illo quaerat soluta quia vel cum repellendus molestias dolorum voluptatibus maiores sit sequi, laborum aliquam, incidunt similique? Natus eveniet quibusdam optio.
+            </td>
+        </tr>
+
+    </table>
 </div>
