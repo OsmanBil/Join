@@ -15,7 +15,7 @@ footer {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: rgb(199, 176, 222);
+    background-color: rgb(149, 162, 244);
 }
 
 .section-license {
@@ -24,6 +24,10 @@ footer {
 
 .license {
     margin: 0.3rem 0;
+}
+
+.card {
+    margin-bottom: 200px;
 }
 
 .card-header {

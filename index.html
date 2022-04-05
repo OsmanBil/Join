@@ -19,10 +19,12 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/board.css">
+    <link rel="stylesheet" href="css/backlog.css">
     <script src="js/mini_backend.js"></script>
     <script src="js/includeHTML.js"></script>
     <script src="js/main.js"></script>
     <script src="js/board.js"></script>
+    <script src="js/backlog.js"></script>
     <script>
 setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 
@@ -32,7 +34,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 <body onload="init()">
     <button onclick="insertSampleData()">Testdaten speichern (Variable 'tasks')</button>
     
-    <div class="card mb-3" style="width: 100%">
+    <div class="card" style="width: 100%">
         <div class="row g-0">
             <div class="nav-sidebar col-md-2 d-flex-column justify-content-start align-items-center">
               <img src="img/logo.png" class="logo img-fluid rounded-start" alt="...">
@@ -41,7 +43,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
                   <a id="link-board" class="nav-link" href="#" onclick="openBoard()">Board</a>
                 </li>
                 <li class="nav-item">
-                  <a id="link-backlog" class="nav-link" href="#">Backlog</a>
+                  <a id="link-backlog" class="nav-link" href="#" onclick="openBacklog()">Backlog</a>
                 </li>
                 <li class="nav-item">
                   <a id="link-addtask" class="nav-link" href="#">Add Task</a>
@@ -58,6 +60,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
                 <div class="card-body">
                   <!-- Place all views like Board, Backlog, Add Task, Help (as a template) here -->
                     <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
+                    <div id="backlog" class="backlog view container px-0 py-3 d-none" w3-include-html="templates/backlog.html"></div>
                     
         
                 </div>

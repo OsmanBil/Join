@@ -1,0 +1,19 @@
+.backlog {
+    width: 100%;
+    height: 100vh;
+    padding: 3rem 2rem;
+}
+
+.task-log {
+    width: 100%;
+    background-color: rgb(245, 243, 250);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.caption {
+    background-color: var(--bg-color1);
+    text-align: center;
+}
