@@ -76,6 +76,11 @@ body {
     border-bottom: 1px solid var(--color-shadow-black);
 }
 
+.img-assignee {
+    height: 20px;
+    object-fit: cover;
+}
+
 .assigned {
     display: flex;
     justify-content: flex-end;

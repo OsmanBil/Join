@@ -46,16 +46,29 @@ function renderTaskCard(task, limitTitle, limitDescription) {
 
 
 function allowDrop(ev) {
-    ev.preventDefault();
-
-    let targetElement = document.getElementById(ev.target.id);
-    targetElement.classList.add('border-solid');
+    ev.preventDefault();   
 }
 
 
 function drag(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
+    console.log(ev.target.id);
 }
+
+
+function dragenter(ev) {
+    let targetElement = document.getElementById(ev.target.id);
+    targetElement.classList.add('border-solid');
+    console.log('dragenter');
+}
+
+
+function dragleave(ev) {
+    let targetElement = document.getElementById(ev.target.id);
+    targetElement.classList.remove('border-solid');
+    console.log('dragleave');
+}
+
 
 function drop(ev) {
     ev.preventDefault();
@@ -64,7 +77,8 @@ function drop(ev) {
 
     let targetElement = document.getElementById(elementIDTarget);
 
-    tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    //tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
     targetElement.classList.remove('border-solid');
 
     showTasksOnBoard();

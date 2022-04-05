@@ -47,7 +47,6 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
  */
 let tasks = [];
 
-
 // /**
 //  * @global
 //  */
@@ -76,7 +75,7 @@ function insertSampleData() {
             'status': taskStatus[2],
             'due_date': new Date('December 17, 2022'),
             'urgency': false,
-            'assigned_to': ['Andreas']
+            'assigned_to': [users[0], users[1], users[2]]
         },
         {
             'id': 1,
@@ -85,12 +84,14 @@ function insertSampleData() {
             'status': taskStatus[3],
             'due_date': new Date('May 12, 2022'),
             'urgency': true,
-            'assigned_to': ['Andreas']
+            'assigned_to': [users[2]]
         }
     ]
 
     backend.setItem('tasks', tasks);    //store sample data
     alert('Daten im Backend mit dem key = "tasks" gespeichert.');
+
+    loadTasks();
 }
 
 
@@ -101,19 +102,19 @@ function insertSampleData() {
  */
 const users = [
     {
-        'name': 'Raphael Konopatzki',
-        'mail': 'mail1@mail.de',
-        'img': null
+        'name': 'Batman',
+        'mail': 'batman@mail.de',
+        'img': 'img/a.png'
     },
     {
-        'name': 'Osman Bilgin',
-        'mail': 'mail2@mail.de',
-        'img': null
+        'name': 'Grinch',
+        'mail': 'grinch@mail.de',
+        'img': 'img/b.png'
     },
     {
-        'name': 'Andreas Komor',
-        'mail': 'mail3@mail.de',
-        'img': null
+        'name': 'Spider Man',
+        'mail': 'spider@mail.de',
+        'img': 'img/c.png'
     }
 ];
 
@@ -133,8 +134,30 @@ function init() {
  */
 async function loadTasks() {
     await downloadFromServer();
-    tasks = JSON.parse(backend.getItem('tasks')) || []; // fill local variable tasks with all stored tasks
+    tasks = backend.getItem('tasks') || []; // fill local variable tasks with all stored tasks
 }
+
+
+// /**
+//  * 
+//  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
+//  * @example task.id = getNewTaskID();
+//  */
+// function getNewTaskID() {
+//     const tmp = [];
+
+//     if (tasks.length === 0) {   //ID=1 if first task
+//         return 1;
+//     }
+
+//     for (const task of tasks) {
+//             if (task && Number.isInteger(task.id)) { //only if task exists and ID is a number
+//                 tmp.push(Number(task.id));
+//             }
+//     }
+
+//     return Math.max(...tmp) + 1;
+// }
 
 
 /**
@@ -142,19 +165,26 @@ async function loadTasks() {
  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
  * @example task.id = getNewTaskID();
  */
-function getNewTaskID() {
-    const tmp = [];
-    for (let task of tasks) {
-            tmp.push(task.id);
+ function getNewTaskID() {
+    let tmp = 0;
+    let ID;
+
+    for (const task of tasks) {
+            if (task && Number.isInteger(task.id)) { //only if task exists and ID is a number
+                ID = Number(task.id);
+                if (tmp < ID) {
+                    tmp = ID;
+                }
+            }
     }
 
-    return (Math.max(tmp) + 1);
+    return (tmp > 0) ? tmp + 1 : 1;
 }
 
 
 /**
  * Renders assignees of a task.
- * @param {*} assigned_to   - assignees
+ * @param {Array.<string>} assigned_to   - assignees
  * @returns {string} - html code (icons) that represents the assignees. If there is no assignee, this function returns empty string.
  */
 function renderAssignees(assigned_to) {
@@ -162,7 +192,7 @@ function renderAssignees(assigned_to) {
 
     for (user of assigned_to) {
         tmp += /*html*/`
-            <img class="img-assignee" src="${user.img}">
+            <img class="img-assignee" src="${user.img}" alt="${user.name}">
         `;
     }
 
@@ -211,6 +241,23 @@ function getIndexFromElementID(elementID) {
         return;
     }
 }
+
+
+/**
+ * - Gets a task from a ElementID (preconditions: element id has to be in format: name_id)
+ * or from a TaskID 
+ * @param {(string | number)} taskIDOrElementID - If string -> ID of a html element assumed,
+ * if number -> ID of task assumed
+ * @returns {task} - Returns a task with wanted ID
+ */
+function getTaskFromTaskID(taskIDOrElementID) {
+    if (typeof taskIDOrElementID === 'string') {
+        return tasks.filter(t => t.id === getIndexFromElementID(taskIDOrElementID))[0];
+    } else if (typeof taskIDOrElementID === 'number') {
+        return tasks.filter(t => t.id === taskIDOrElementID.toFixed())[0];
+    }
+}
+
 
 
 /**
