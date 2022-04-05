@@ -41,6 +41,12 @@ footer {
 
 .nav {
     margin-top: 30px;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-item {
+    width: 100%;
 }
 
 .nav-sidebar {
@@ -51,9 +57,18 @@ footer {
 
 .nav-link {
     color: white !important;
+    padding: 6px 10px;
+}
+
+.nav-link:hover {
+    font-size: larger;
 }
 
 #view-name {
     font-size: 1.3rem;
     font-weight: bold
+}
+
+.nav-active {
+    border-left: 6px solid white !important;
 }

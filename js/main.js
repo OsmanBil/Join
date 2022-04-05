@@ -269,12 +269,28 @@ function openView(viewID) {
     let views = document.getElementsByClassName('view');
 
     document.getElementById('view-name').innerHTML = viewID.toUpperCase();    //set title
+    setLinkActive(viewID);  // set active link
 
     for (const view of views) {
         if (view.id === viewID) {
             displayElement(view.id);
         } else {
             hideElement(view.id);
+        }
+    }
+}
+
+
+/**
+ * - Emphasizes the side bar link of the current view  
+ * @param {string} viewID - ElementID of the view to be displayed.
+ */
+function setLinkActive(viewID) {
+    for (let link of document.getElementsByClassName('nav-link')) {
+        if (link.id.toLowerCase().indexOf('-' + viewID.toLowerCase()) > -1) {
+            link.classList.add('nav-active');
+        } else {
+            link.classList.remove('nav-active');
         }
     }
 }
