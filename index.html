@@ -30,9 +30,42 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 </head>
 
 <body onload="init()">
-    <button onclick="openBoard()">Board anzeigen (Test)</button>
     <button onclick="insertSampleData()">Testdaten speichern (Variable 'tasks')</button>
-    <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
+    
+    <div class="card mb-3" style="width: 100%">
+        <div class="row g-0">
+            <div class="nav-sidebar col-md-2 d-flex-column justify-content-start align-items-center">
+              <img src="img/logo.png" class="logo img-fluid rounded-start" alt="...">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="openBoard()">Board</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Backlog</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Add Task</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link">Help</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="card-header">
+                    <span id="view-name"></span>
+                  </div>
+                <div class="card-body">
+                  <!-- Place all views like Board, Backlog, Add Task, Help (as a template) here -->
+                    <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
+                    
+        
+                </div>
+            </div>
+          </div>
+    </div>
+
+    
     <div id="dsgvo" class="view container px-0 py-3 d-none" w3-include-html="templates/dsgvo.html"></div>
     <div id="imprint" class="view container px-0 py-3 d-none" w3-include-html="templates/imprint.html"></div>
     

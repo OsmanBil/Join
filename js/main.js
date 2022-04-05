@@ -268,6 +268,8 @@ function getTaskFromTaskID(taskIDOrElementID) {
 function openView(viewID) {
     let views = document.getElementsByClassName('view');
 
+    document.getElementById('view-name').innerHTML = viewID.toUpperCase();    //set title
+
     for (const view of views) {
         if (view.id === viewID) {
             displayElement(view.id);
