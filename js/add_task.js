@@ -48,7 +48,7 @@ async function addTask() {
     let urgencyText = urgency.options[urgency.selectedIndex].text;
 
     await downloadFromServer();
-    tasks = await JSON.parse(backend.getItem('tasks')) || [];
+    tasks = backend.getItem('tasks') || [];
 
 
 
@@ -67,7 +67,7 @@ async function addTask() {
 
 
     tasks.push(task);
-    backend.setItem('tasks', JSON.stringify(tasks));        //backend connection
+    backend.setItem('tasks', tasks);        //backend connection
 
 
     alert('Daten gespeichert.');
