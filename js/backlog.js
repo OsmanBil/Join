@@ -59,7 +59,7 @@ function renderTaskLog(task) {
  */
 function deleteTask(ID) {
     tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
-
+    synchronizeData();
     showTasksOnBacklog();
 }
 
@@ -69,6 +69,6 @@ function deleteTask(ID) {
  */
 function keepTask(ID) {
     getTaskFromTaskID(ID)['status'] = taskStatus[1];   // move task to status 'todo'
-    
+    synchronizeData();
     showTasksOnBacklog();
 }

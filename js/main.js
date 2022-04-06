@@ -133,7 +133,7 @@ function init() {
     loadTasks();
     includeHTML();
 
-    //openBoard();    //default view is board
+    openBoard();    //default view is board
 }
 
 
@@ -142,7 +142,7 @@ function init() {
  * @async
  */
 async function loadTasks() {
-    downloadFromServer();
+    await downloadFromServer();
     tasks = backend.getItem('tasks') || []; // fill local variable tasks with all stored tasks
 }
 
@@ -302,4 +302,12 @@ function setLinkActive(viewID) {
             link.classList.remove('nav-active');
         }
     }
+}
+
+
+/**
+ * Synchronizes local data with backend data
+ */
+async function synchronizeData() {
+    await backend.setItem('tasks', tasks);
 }
