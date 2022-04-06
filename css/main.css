@@ -80,3 +80,7 @@ footer {
 .section-dsgvo, .section-imprint {
     margin-bottom: 50px;
 }
+
+.point {
+    cursor: pointer;
+}

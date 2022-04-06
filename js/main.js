@@ -201,7 +201,7 @@ function renderAssignees(assigned_to) {
 
     for (user of assigned_to) {
         tmp += /*html*/`
-            <img class="img-assignee" src="${user.img}" alt="${user.name}">
+            <img class="img-assignee" src="${user.img}" alt="${user.name}" data-bs-toggle="tooltip" data-bs-placement="top" title="${user.name + ' (' + user.mail})">
         `;
     }
 

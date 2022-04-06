@@ -36,8 +36,8 @@ function renderTaskLog(task) {
     return /*html*/`
        <tr id="task-log_${task.id}" class="task-log">
             <td class="action">
-                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deleteTask(${task.id})">Discard</button>
-                <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})">Keep</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deleteTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Discard</button>
+                <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="This task will be kept and moved to board (todo section).">Keep</button>
             </td>
             <td class="assignees">
                 ${renderAssignees(task.assigned_to)}
@@ -45,7 +45,7 @@ function renderTaskLog(task) {
             <td class="category">
             ${task.category}
             </td>
-            <td class="details">
+            <td class="details" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">
             ${task.description}
             </td>
         </tr>
