@@ -47,7 +47,6 @@
  */
 let tasks = [];
 
-
 /**
  * stores possible status of a task
  * @type {Array.<string>}
@@ -131,8 +130,10 @@ const users = [
  * Functionality to run if index.html is opened 
  */
 function init() {
-    includeHTML();
     loadTasks();
+    includeHTML();
+
+    //openBoard();    //default view is board
 }
 
 
@@ -141,7 +142,7 @@ function init() {
  * @async
  */
 async function loadTasks() {
-    await downloadFromServer();
+    downloadFromServer();
     tasks = backend.getItem('tasks') || []; // fill local variable tasks with all stored tasks
 }
 

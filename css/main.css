@@ -76,3 +76,7 @@ footer {
 .nav-active {
     border-left: 6px solid white !important;
 }
+
+.section-dsgvo, .section-imprint {
+    margin-bottom: 50px;
+}
