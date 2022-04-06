@@ -61,12 +61,12 @@
  */
 
 
-/**
- * @global
- * @function setURL
- * @description - This function sets the link to backend storage
- */
-setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
+// /**
+//  * @global
+//  * @function setURL
+//  * @description - This function sets the link to backend storage
+//  */
+// setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 
 /**
  * @global
@@ -75,19 +75,6 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
  */
 let tasks = [];
 
-
-// /**
-//  * @global
-//  */
-// let task = {
-//     'title': null,
-//     'description': null,
-//     'status': null,
-//     'due_date': null,
-//     'urgency': null,
-//     'assigned_to': []
-// };
-
 /**
  * stores possible status of a task
  * @type {Array.&lt;string>}
@@ -95,30 +82,51 @@ let tasks = [];
  */
 const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
 
+
+/**
+ * stores possible urgencies of a task
+ * @type {Array.&lt;string>}
+ * @global
+ */
+ const urgencies = ['Low', 'Middle', 'High'];
+
+
+
+/**
+ * stores possible categories of a task
+ * @type {Array.&lt;string>}
+ * @global
+ */
+ const categories = ['Marketing', 'Product', 'Sale'];
+
+
+
 function insertSampleData() {
     tasks = [
         {
             'id': 0,
             'title': 'Task 1',
             'description': 'Diese Task habe ich für Testzwecke angelegt.',
-            'status': taskStatus[2],
+            'status': taskStatus[0],
             'due_date': new Date('December 17, 2022'),
             'urgency': false,
-            'assigned_to': ['Andreas']
+            'assigned_to': [users[0], users[1], users[2]]
         },
         {
             'id': 1,
             'title': 'Task 2',
             'description': 'Diese dringende Task habe ich auch für Testzwecke angelegt.',
-            'status': taskStatus[3],
+            'status': taskStatus[0],
             'due_date': new Date('May 12, 2022'),
             'urgency': true,
-            'assigned_to': ['Andreas']
+            'assigned_to': [users[2]]
         }
     ]
 
     backend.setItem('tasks', tasks);    //store sample data
     alert('Daten im Backend mit dem key = "tasks" gespeichert.');
+
+    loadTasks();
 }
 
 
@@ -129,19 +137,19 @@ function insertSampleData() {
  */
 const users = [
     {
-        'name': 'Raphael Konopatzki',
-        'mail': 'mail1@mail.de',
-        'img': null
+        'name': 'Batman',
+        'mail': 'batman@mail.de',
+        'img': 'img/a.png'
     },
     {
-        'name': 'Osman Bilgin',
-        'mail': 'mail2@mail.de',
-        'img': null
+        'name': 'Grinch',
+        'mail': 'grinch@mail.de',
+        'img': 'img/b.png'
     },
     {
-        'name': 'Andreas Komor',
-        'mail': 'mail3@mail.de',
-        'img': null
+        'name': 'Spider Man',
+        'mail': 'spider@mail.de',
+        'img': 'img/c.png'
     }
 ];
 
@@ -150,8 +158,10 @@ const users = [
  * Functionality to run if index.html is opened 
  */
 function init() {
-    includeHTML();
     loadTasks();
+    includeHTML();
+
+    setTimeout(openBoard, 200);    //default view is board
 }
 
 
@@ -160,15 +170,58 @@ function init() {
  * @async
  */
 async function loadTasks() {
-    const data = await backend.getItem('tasks');
+    await downloadFromServer();
+    tasks = backend.getItem('tasks') || []; // fill local variable tasks with all stored tasks
+}
 
-    tasks = data || []; // fill local variable tasks with all stored tasks
+
+// /**
+//  * 
+//  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
+//  * @example task.id = getNewTaskID();
+//  */
+// function getNewTaskID() {
+//     const tmp = [];
+
+//     if (tasks.length === 0) {   //ID=1 if first task
+//         return 1;
+//     }
+
+//     for (const task of tasks) {
+//             if (task &amp;&amp; Number.isInteger(task.id)) { //only if task exists and ID is a number
+//                 tmp.push(Number(task.id));
+//             }
+//     }
+
+//     return Math.max(...tmp) + 1;
+// }
+
+
+/**
+ * 
+ * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
+ * @example task.id = getNewTaskID();
+ */
+ function getNewTaskID() {
+    let tmp = 0;
+    let ID;
+
+    for (const task of tasks) {
+            if (task &amp;&amp; Number.isInteger(task.id)) { //only if task exists and ID is a number
+                ID = Number(task.id);
+                if (tmp &lt; ID) {
+                    tmp = ID;
+                }
+            }
+    }
+
+    return (tmp > 0) ? tmp + 1 : 1;
 }
 
 
 /**
  * Renders assignees of a task.
- * @param {*} assigned_to   - assignees
+ * @param {Array.&lt;string>} assigned_to   - assignees
  * @returns {string} - html code (icons) that represents the assignees. If there is no assignee, this function returns empty string.
  */
 function renderAssignees(assigned_to) {
@@ -176,7 +229,7 @@ function renderAssignees(assigned_to) {
 
     for (user of assigned_to) {
         tmp += /*html*/`
-            &lt;img class="img-assignee" src="${user.img}">
+            &lt;img class="img-assignee" src="${user.img}" alt="${user.name}" data-bs-toggle="tooltip" data-bs-placement="top" title="${user.name + ' (' + user.mail})">
         `;
     }
 
@@ -228,12 +281,32 @@ function getIndexFromElementID(elementID) {
 
 
 /**
+ * - Gets a task from a ElementID (preconditions: element id has to be in format: name_id)
+ * or from a TaskID 
+ * @param {(string | number)} taskIDOrElementID - If string -> ID of a html element assumed,
+ * if number -> ID of task assumed
+ * @returns {task} - Returns a task with wanted ID
+ */
+function getTaskFromTaskID(taskIDOrElementID) {
+    if (typeof taskIDOrElementID === 'string') {
+        return tasks.filter(t => t.id === getIndexFromElementID(taskIDOrElementID))[0];
+    } else if (typeof taskIDOrElementID === 'number') {
+        return tasks.filter(t => t.id === +taskIDOrElementID.toFixed())[0];
+    }
+}
+
+
+
+/**
  * - Switches between views in one pager: iterates through all views, displays the wanted view and hides the rest.
  * - Preconditions: the view to be displayed has to have the class name "view".
- * @param {string} viewID - View to be displayed. 
+ * @param {string} viewID - ElementID of the view to be displayed. 
  */
 function openView(viewID) {
     let views = document.getElementsByClassName('view');
+
+    document.getElementById('view-name').innerHTML = viewID.toUpperCase();    //set title
+    setLinkActive(viewID);  // set active link
 
     for (const view of views) {
         if (view.id === viewID) {
@@ -242,6 +315,44 @@ function openView(viewID) {
             hideElement(view.id);
         }
     }
+}
+
+
+/**
+ * - Emphasizes the side bar link of the current view  
+ * @param {string} viewID - ElementID of the view to be displayed.
+ */
+function setLinkActive(viewID) {
+    for (let link of document.getElementsByClassName('nav-link')) {
+        if (link.id.toLowerCase().indexOf('-' + viewID.toLowerCase()) > -1) {
+            link.classList.add('nav-active');
+        } else {
+            link.classList.remove('nav-active');
+        }
+    }
+}
+
+
+/**
+ * Synchronizes local data with backend data
+ */
+async function synchronizeData() {
+    await backend.setItem('tasks', tasks);
+}
+
+
+/**
+ * Deletes a task
+ * @param {number} ID - The ID of the task to be deleted
+ */
+ function deleteTask(ID) {
+    tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
+    synchronizeData();
+}
+
+
+function openHelp() {
+    openView('help');
 }</code></pre>
         </article>
     </section>
@@ -252,13 +363,13 @@ function openView(viewID) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setURL">setURL</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#users">users</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#categories">categories</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 04 2022 08:45:25 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Apr 06 2022 15:16:35 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

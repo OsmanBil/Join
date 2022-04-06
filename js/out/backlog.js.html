@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: backlog.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,91 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: backlog.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Opens the backlog section
+ */
+ function openBacklog() {
+    showTasksOnBacklog();
+    openView('backlog');
+}
 
 
-    <h3> </h3>
+/**
+ * Show all created tasks on backlog
+ */
+ function showTasksOnBacklog() {
+    let backlogSection = document.getElementById('task-logs-content');
+    let tmp = '';
+    backlogSection.innerHTML = '';
+
+        for (const task of filterTasksByStatus(taskStatus[0])) {//iterates through all tasks with status 'backlog'
+            tmp += renderTaskLog(task);
+        }
+
+        if (tmp === '') {
+            tmp = '&lt;tr>&lt;td class="td-message" colspan="4">There are no tasks in backlog.&lt;/td>&lt;/tr>';
+        }
+
+        backlogSection.innerHTML = tmp; // fill content to board-section
+}
 
 
+/**
+ * Renders tasks for backlog
+ * @param {task} task - a task   
+ * @returns {string} - html code that represents a task (for backlog)
+ */
+function renderTaskLog(task) {
+    return /*html*/`
+       &lt;tr id="task-log_${task.id}" class="task-log">
+            &lt;td class="action">
+                &lt;button type="button" class="btn btn-danger btn-sm my-1" onclick="deteleTaskLog(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Discard&lt;/button>
+                &lt;button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="This task will be kept and moved to board (todo section).">Keep&lt;/button>
+            &lt;/td>
+            &lt;td class="assignees">
+                ${renderAssignees(task.assigned_to)}
+            &lt;/td>
+            &lt;td class="category">
+            ${task.category}
+            &lt;/td>
+            &lt;td class="details" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">
+            ${task.description}
+            &lt;/td>
+        &lt;/tr>
+    `;
+}
 
 
+/**
+ * Deletes task directly on backlog.
+ * @param {number} ID - The ID of the Task to be deleted.
+ */
+function deteleTaskLog(ID) {
+    deleteTask(ID);
+    showTasksOnBacklog();
+}
 
 
-
-
-
-
-    
-
-
-
-
-
+/**
+ * Moves a task to the status 'todo'
+ * @param {number} ID - The ID of the task to be moved to next status
+ */
+function keepTask(ID) {
+    getTaskFromTaskID(ID)['status'] = taskStatus[1];   // move task to status 'todo'
+    synchronizeData();
+    showTasksOnBacklog();
+}</code></pre>
+        </article>
+    </section>
 
 
 

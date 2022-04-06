@@ -84,3 +84,14 @@ footer {
 .point {
     cursor: pointer;
 }
+
+.link-jsdoc {
+    font-size: larger;
+    border: 1px solid rgba(0, 0, 250, 0.5);
+    display: inline;
+    padding: 2px 10px;
+}
+
+.link-jsdoc:hover {
+    background-color: rgb(166, 203, 240);
+}

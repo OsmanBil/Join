@@ -65,8 +65,9 @@ function showTasksOnBoard() {
 function renderTaskCard(task, limitTitle, limitDescription) {
     return /*html*/`
         &lt;div id="task_${task.id}" class="task-card${(task.urgency) ? ' urgent' : ''}" draggable="true" ondragstart="drag(event)">
-            &lt;p id="title_${task.id}" class="title">${(limitTitle) ? task.title.substring(0, limitTitle) + '...' : task.title}&lt;/p>
-            &lt;p id="desc_${task.id}">${(limitDescription) ? task.description.substring(0, limitDescription) + '...' : task.description}&lt;/p>
+            &lt;img class="img-delete point" src="img/delete.png" alt="delete task" onclick="deleteTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="delete this task">
+            &lt;p id="title_${task.id}" class="title" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">${(limitTitle) ? task.title.substring(0, limitTitle) + '...' : task.title}&lt;/p>
+            &lt;p id="desc_${task.id}" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.description}">${(limitDescription) ? task.description.substring(0, limitDescription) + '...' : task.description}&lt;/p>
             &lt;div id="assigned_${task.id}" class="assigned">${renderAssignees(task.assigned_to)}&lt;/div>
         &lt;/div>
     `;
@@ -74,16 +75,26 @@ function renderTaskCard(task, limitTitle, limitDescription) {
 
 
 function allowDrop(ev) {
-    ev.preventDefault();
-
-    let targetElement = document.getElementById(ev.target.id);
-    targetElement.classList.add('border-solid');
+    ev.preventDefault();   
 }
 
 
 function drag(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
 }
+
+
+function dragenter(ev) {
+    let targetElement = document.getElementById(ev.target.id);
+    targetElement.classList.add('emp-status');
+}
+
+
+function dragleave(ev) {
+    let targetElement = document.getElementById(ev.target.id);
+    targetElement.classList.remove('emp-status');
+}
+
 
 function drop(ev) {
     ev.preventDefault();
@@ -92,9 +103,21 @@ function drop(ev) {
 
     let targetElement = document.getElementById(elementIDTarget);
 
-    tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
-    targetElement.classList.remove('border-solid');
+    getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    synchronizeData();
+    //tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    targetElement.classList.remove('emp-status');
 
+    showTasksOnBoard();
+}
+
+
+/**
+ * Deletes task directly on board.
+ * @param {number} ID - The ID of the Task to be deleted.
+ */
+function deleteTaskOnBoard(ID) {
+    deleteTask(ID);
     showTasksOnBoard();
 }</code></pre>
         </article>
@@ -106,13 +129,13 @@ function drop(ev) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setURL">setURL</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#users">users</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#categories">categories</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Mon Apr 04 2022 08:45:25 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed Apr 06 2022 15:16:35 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
