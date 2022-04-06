@@ -51,3 +51,24 @@ function renderTaskLog(task) {
         </tr>
     `;
 }
+
+
+/**
+ * Deletes a task
+ * @param {number} ID - The ID of the task to be deleted
+ */
+function deleteTask(ID) {
+    tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
+
+    showTasksOnBacklog();
+}
+
+/**
+ * Moves a task to the status 'todo'
+ * @param {number} ID - The ID of the task to be moved to next status
+ */
+function keepTask(ID) {
+    getTaskFromTaskID(ID)['status'] = taskStatus[1];   // move task to status 'todo'
+    
+    showTasksOnBacklog();
+}

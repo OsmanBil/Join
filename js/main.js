@@ -80,7 +80,7 @@ function insertSampleData() {
             'id': 0,
             'title': 'Task 1',
             'description': 'Diese Task habe ich für Testzwecke angelegt.',
-            'status': taskStatus[2],
+            'status': taskStatus[0],
             'due_date': new Date('December 17, 2022'),
             'urgency': false,
             'assigned_to': [users[0], users[1], users[2]]
@@ -89,7 +89,7 @@ function insertSampleData() {
             'id': 1,
             'title': 'Task 2',
             'description': 'Diese dringende Task habe ich auch für Testzwecke angelegt.',
-            'status': taskStatus[3],
+            'status': taskStatus[0],
             'due_date': new Date('May 12, 2022'),
             'urgency': true,
             'assigned_to': [users[2]]
@@ -262,7 +262,7 @@ function getTaskFromTaskID(taskIDOrElementID) {
     if (typeof taskIDOrElementID === 'string') {
         return tasks.filter(t => t.id === getIndexFromElementID(taskIDOrElementID))[0];
     } else if (typeof taskIDOrElementID === 'number') {
-        return tasks.filter(t => t.id === taskIDOrElementID.toFixed())[0];
+        return tasks.filter(t => t.id === +taskIDOrElementID.toFixed())[0];
     }
 }
 
