@@ -321,3 +321,8 @@ async function synchronizeData() {
     tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
     synchronizeData();
 }
+
+
+function openHelp() {
+    openView('help');
+}

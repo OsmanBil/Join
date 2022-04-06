@@ -49,7 +49,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
                   <a id="link-addtask" class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Form to add a new task">Add Task</a>
                 </li>
                 <li class="nav-item">
-                  <a id="link-help" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Get some help">Help</a>
+                  <a id="link-help" class="nav-link" onclick="openHelp()" data-bs-toggle="tooltip" data-bs-placement="top" title="Get some help">Help</a>
                 </li>
               </ul>
             </div>
@@ -62,6 +62,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
                     <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
                     <div id="backlog" class="backlog view container px-0 py-3 d-none" w3-include-html="templates/backlog.html"></div>
                     
+                    <div id="help" class="help view d-none" w3-include-html="templates/readme.html"></div>
                     <div id="dsgvo" class="view container px-0 py-3 d-none" w3-include-html="templates/dsgvo.html"></div>
                     <div id="imprint" class="view container px-0 py-3 d-none" w3-include-html="templates/imprint.html"></div>
                 </div>
