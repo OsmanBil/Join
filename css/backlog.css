@@ -64,3 +64,9 @@
     background-color: var(--bg-color1);
     text-align: center;
 }
+
+.td-message {
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+}
