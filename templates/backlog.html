@@ -3,10 +3,14 @@
     <table class="task-logs">
 
         <tr>
-            <th>ASSIGNED TO</th><th>CATEGORY</th><th>DETAILS</th>
+            <th>ACTION</th><th>ASSIGNED TO</th><th>CATEGORY</th><th>DETAILS</th>
         </tr>
 
         <tr id="task-log_1" class="task-log">
+            <td class="action">
+                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deleteTask(1)">Discard</button>
+                <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(1)">Keep</button>
+            </td>
             <td class="assignees">
                 <img class="img-assignee" src="img/a.png">
                 <img class="img-assignee" src="img/b.png">
@@ -20,6 +24,10 @@
         </tr>
 
         <tr id="task-log_2" class="task-log">
+            <td class="action">
+                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deleteTask(2)">Discard</button>
+                <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(2)">Keep</button>
+            </td>
             <td class="assignees">
                 <img class="img-assignee" src="img/b.png">
             </td>

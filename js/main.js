@@ -33,12 +33,12 @@
  */
 
 
-/**
- * @global
- * @function setURL
- * @description - This function sets the link to backend storage
- */
-setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
+// /**
+//  * @global
+//  * @function setURL
+//  * @description - This function sets the link to backend storage
+//  */
+// setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 
 /**
  * @global
@@ -47,17 +47,6 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
  */
 let tasks = [];
 
-// /**
-//  * @global
-//  */
-// let task = {
-//     'title': null,
-//     'description': null,
-//     'status': null,
-//     'due_date': null,
-//     'urgency': null,
-//     'assigned_to': []
-// };
 
 /**
  * stores possible status of a task
@@ -65,6 +54,25 @@ let tasks = [];
  * @global
  */
 const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
+
+
+/**
+ * stores possible urgencies of a task
+ * @type {Array.<string>}
+ * @global
+ */
+ const urgencies = ['Low', 'Middle', 'High'];
+
+
+
+/**
+ * stores possible categories of a task
+ * @type {Array.<string>}
+ * @global
+ */
+ const categories = ['Marketing', 'Product', 'Sale'];
+
+
 
 function insertSampleData() {
     tasks = [
