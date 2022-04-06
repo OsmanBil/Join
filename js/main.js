@@ -133,7 +133,7 @@ function init() {
     loadTasks();
     includeHTML();
 
-    openBoard();    //default view is board
+    setTimeout(openBoard, 200);    //default view is board
 }
 
 
@@ -310,4 +310,14 @@ function setLinkActive(viewID) {
  */
 async function synchronizeData() {
     await backend.setItem('tasks', tasks);
+}
+
+
+/**
+ * Deletes a task
+ * @param {number} ID - The ID of the task to be deleted
+ */
+ function deleteTask(ID) {
+    tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
+    synchronizeData();
 }

@@ -53,21 +53,18 @@ function allowDrop(ev) {
 
 function drag(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
-    console.log(ev.target.id);
 }
 
 
 function dragenter(ev) {
     let targetElement = document.getElementById(ev.target.id);
     targetElement.classList.add('emp-status');
-    console.log('dragenter');
 }
 
 
 function dragleave(ev) {
     let targetElement = document.getElementById(ev.target.id);
     targetElement.classList.remove('emp-status');
-    console.log('dragleave');
 }
 
 
@@ -79,6 +76,7 @@ function drop(ev) {
     let targetElement = document.getElementById(elementIDTarget);
 
     getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+    synchronizeData();
     //tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
     targetElement.classList.remove('emp-status');
 
@@ -92,6 +90,5 @@ function drop(ev) {
  */
 function deleteTaskOnBoard(ID) {
     deleteTask(ID);
-
     showTasksOnBoard();
 }

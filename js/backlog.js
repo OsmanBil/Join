@@ -36,7 +36,7 @@ function renderTaskLog(task) {
     return /*html*/`
        <tr id="task-log_${task.id}" class="task-log">
             <td class="action">
-                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deleteTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Discard</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deteleTaskLog(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Discard</button>
                 <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="This task will be kept and moved to board (todo section).">Keep</button>
             </td>
             <td class="assignees">
@@ -54,14 +54,14 @@ function renderTaskLog(task) {
 
 
 /**
- * Deletes a task
- * @param {number} ID - The ID of the task to be deleted
+ * Deletes task directly on backlog.
+ * @param {number} ID - The ID of the Task to be deleted.
  */
-function deleteTask(ID) {
-    tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
-    synchronizeData();
+function deteleTaskLog(ID) {
+    deleteTask(ID);
     showTasksOnBacklog();
 }
+
 
 /**
  * Moves a task to the status 'todo'
