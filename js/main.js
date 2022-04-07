@@ -63,7 +63,6 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
  const urgencies = ['Low', 'Middle', 'High'];
 
 
-
 /**
  * stores possible categories of a task
  * @type {Array.<string>}

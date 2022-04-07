@@ -39,7 +39,7 @@
 
 .task-log {
     width: 100%;
-    background-color: rgb(245, 243, 250);
+    background-color: rgb(241, 240, 254) !important;
     border-radius: 10px;
     margin-bottom: 10px;
     justify-content: space-between;
