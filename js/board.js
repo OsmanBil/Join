@@ -73,7 +73,7 @@ function drop(ev) {
     const elementIDTarget = ev.target.id;
     const targetElement = document.getElementById(elementIDTarget);
 
-    if (elementIDTarget.indexOf('status_') > -1) {
+    if (elementIDTarget.indexOf('status_') > -1 || elementIDTarget === 'link-backlog_0') {
         const elementIDSource = ev.dataTransfer.getData('text');
 
         getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
