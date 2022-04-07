@@ -72,36 +72,6 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
  const categories = ['Marketing', 'Product', 'Sale'];
 
 
-
-function insertSampleData() {
-    tasks = [
-        {
-            'id': 0,
-            'title': 'Task 1',
-            'description': 'Diese Task habe ich für Testzwecke angelegt.',
-            'status': taskStatus[0],
-            'due_date': new Date('December 17, 2022'),
-            'urgency': false,
-            'assigned_to': [users[0], users[1], users[2]]
-        },
-        {
-            'id': 1,
-            'title': 'Task 2',
-            'description': 'Diese dringende Task habe ich auch für Testzwecke angelegt.',
-            'status': taskStatus[0],
-            'due_date': new Date('May 12, 2022'),
-            'urgency': true,
-            'assigned_to': [users[2]]
-        }
-    ]
-
-    backend.setItem('tasks', tasks);    //store sample data
-    alert('Daten im Backend mit dem key = "tasks" gespeichert.');
-
-    loadTasks();
-}
-
-
 /**
  * stores users
  * @type {Array.<user>}
@@ -132,7 +102,6 @@ const users = [
 function init() {
     loadTasks();
     includeHTML();
-
     setTimeout(openBoard, 200);    //default view is board
 }
 
@@ -144,6 +113,7 @@ function init() {
 async function loadTasks() {
     await downloadFromServer();
     tasks = backend.getItem('tasks') || []; // fill local variable tasks with all stored tasks
+    countTasks();   //displays number of board and backlog tasks in nav bar
 }
 
 
