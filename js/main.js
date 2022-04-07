@@ -310,6 +310,7 @@ function setLinkActive(viewID) {
  */
 async function synchronizeData() {
     await backend.setItem('tasks', tasks);
+    countTasks();
 }
 
 
@@ -325,4 +326,17 @@ async function synchronizeData() {
 
 function openHelp() {
     openView('help');
+}
+
+
+/**
+ * Counts and displays number of backlog and board tasks in nav bar
+ */
+function countTasks() {
+    const cTasks = tasks.length;
+    const cBacklog = filterTasksByStatus(taskStatus[0]).length;
+    const cBoard = cTasks - cBacklog;
+
+    document.getElementById('count-board').innerHTML = (cBoard != 0) ? cBoard : ''; // displays number of board tasks
+    document.getElementById('count-backlog').innerHTML = (cBacklog != 0) ? cBacklog : ''; //displays number of backlog tasks
 }
