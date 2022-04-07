@@ -47,7 +47,7 @@ function renderTaskCard(task, limitTitle, limitDescription) {
 
 
 function allowDrop(ev) {
-    ev.preventDefault();   
+    ev.preventDefault();
 }
 
 
@@ -70,17 +70,18 @@ function dragleave(ev) {
 
 function drop(ev) {
     ev.preventDefault();
-    const elementIDSource = ev.dataTransfer.getData('text');
     const elementIDTarget = ev.target.id;
+    const targetElement = document.getElementById(elementIDTarget);
 
-    let targetElement = document.getElementById(elementIDTarget);
+    if (elementIDTarget.indexOf('status_') > -1) {
+        const elementIDSource = ev.dataTransfer.getData('text');
 
-    getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
-    synchronizeData();
-    //tasks[getIndexFromElementID(elementIDSource)]['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+        getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
+        synchronizeData();
+        showTasksOnBoard();
+    }
+
     targetElement.classList.remove('emp-status');
-
-    showTasksOnBoard();
 }
 
 
