@@ -784,7 +784,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="board.js.html">board.js</a>, <a href="board.js.html#line92">line 92</a>
+        <a href="board.js.html">board.js</a>, <a href="board.js.html#line112">line 112</a>
     </li></ul></dd>
     
 
@@ -2704,7 +2704,8 @@ payload {JSON | Array} - The payload you want to store
 
 
 <div class="description">
-    renders one task as a card
+    Renders one task as a card.
+The urgency of a task determines its color on board (higher urgency -> darker shade).
 </div>
 
 
@@ -2843,7 +2844,7 @@ payload {JSON | Array} - The payload you want to store
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="board.js.html">board.js</a>, <a href="board.js.html#line37">line 37</a>
+        <a href="board.js.html">board.js</a>, <a href="board.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -3274,6 +3275,165 @@ payload {JSON | Array} - The payload you want to store
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="setUrgencyColor"><span class="type-signature"></span>setUrgencyColor<span class="signature">(task)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Determines which color a task on board should have dependent on the task urgency.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#task">task</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Current task to be colored.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="board.js.html">board.js</a>, <a href="board.js.html#line55">line 55</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Returns the particular css class to color a task on board.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -3723,7 +3883,7 @@ payload {JSON | Array} - The payload you want to store
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
 
 
             
@@ -3733,7 +3893,7 @@ payload {JSON | Array} - The payload you want to store
 
             
 
-            <td class="description last">classification if urgent</td>
+            <td class="description last">classification of urgency (values can be retrieved by the global array 'urgencies')</td>
         </tr>
 
     
@@ -3995,13 +4155,13 @@ payload {JSON | Array} - The payload you want to store
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#categories">categories</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#categories">categories</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#setUrgencyColor">setUrgencyColor</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Thu Apr 07 2022 10:37:36 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri Apr 08 2022 09:04:48 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
