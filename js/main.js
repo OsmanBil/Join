@@ -1,5 +1,5 @@
 /**
- * @author Osman Bilgin, Raphael Konopatzki, Andreas Komor
+ * @author Osman Bilgin, Andreas Komor
  * @description To generate such JS documentation by JSDoc in html format:
  * 1. open VSCode
  * 2. open terminal
@@ -15,7 +15,7 @@
  * @property {string} description           - task description
  * @property {string} status                - current task status
  * @property {Date} due_date                - deadline for implementation
- * @property {boolean} urgency              - classification if urgent
+ * @property {string} urgency       - classification of urgency (values can be retrieved by the global array 'urgencies')
  * @property {Array.<string>} assigned_to   - whom is the task assigned to
  */
 

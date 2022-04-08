@@ -2,8 +2,9 @@
 :root {
     --bg-color1: white;
     --color-shadow-black: rgba(0, 0, 0, 0.3);
-    --color-nonurgent: rgb(240, 235, 254);
-    --color-urgent: rgb(210, 195, 255);
+    --color-urgent-low: rgb(240, 235, 255);
+    --color-urgent-middle: rgb(228, 219, 255);
+    --color-urgent-high: rgb(210, 195, 255);
 }
 
 body {
@@ -91,8 +92,16 @@ body {
     justify-content: flex-end;
 }
 
-.urgent {
-    background-color: var(--color-urgent);
+.urgent-low {
+    background-color: var(--color-urgent-low);
+}
+
+.urgent-middle {
+    background-color: var(--color-urgent-middle);
+}
+
+.urgent-high {
+    background-color: var(--color-urgent-high);
 }
 
 .emp-status {

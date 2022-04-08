@@ -14,6 +14,8 @@ That's all!
 
 
 ## Views
+> Some views provide tooltip with further details of a task if you stay over particular areas of a task (e.g. backlog and board).
+
 ### 1. Add task
 You add a task by clicking on **add task**.
 
