@@ -27,6 +27,7 @@ body {
 .status-panel, .status-content {
     position: relative;
     background-color: rgb(245, 243, 250);
+    min-width: 160px;
 }
 
 .status-content {
@@ -60,7 +61,8 @@ body {
 .task-card {
     display: inline;
     padding: 5px 10px;
-    max-width: 90%;
+    /* max-width: 90%; */
+    width: 95%;
     border: 1px solid var(--color-shadow-black);
     border-radius: 5px;
     box-shadow: 3px 3px 3px var(--color-shadow-black);
@@ -119,4 +121,12 @@ body {
     right: 11px;
     height: 20px;
     object-fit: cover;
+}
+
+@media(max-width: 850px) {
+    .tasks {
+        height: fit-content;
+        flex-direction: column;
+        align-items: center;
+    }
 }
