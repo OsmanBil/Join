@@ -20,11 +20,13 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/board.css">
     <link rel="stylesheet" href="css/backlog.css">
+    <link rel="stylesheet" href="css/add_task.css">
     <script src="js/mini_backend.js"></script>
     <script src="js/includeHTML.js"></script>
     <script src="js/main.js"></script>
     <script src="js/board.js"></script>
     <script src="js/backlog.js"></script>
+    <script src="js/add_task.js"></script>
     <script>
 setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
 
@@ -48,7 +50,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a id="link-addtask" class="nav-link" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Form to add a new task">
+                  <a id="link-addtask" class="nav-link" href="#" onclick="openAddTask()" data-bs-toggle="tooltip" data-bs-placement="top" title="Form to add a new task">
                     Add Task
                   </a>
                 </li>
@@ -67,6 +69,7 @@ setURL('http://gruppe-213.developerakademie.net/smallest_backend_ever');
                   <!-- Place all views like Board, Backlog, Add Task, Help (as a template) here -->
                     <div id="board" class="board view container px-0 py-3 d-none" w3-include-html="templates/board.html"></div>
                     <div id="backlog" class="backlog view container px-0 py-3 d-none" w3-include-html="templates/backlog.html"></div>
+                    <div id="addTask" class="addTask view container px-0 py-3 d-none" w3-include-html="templates/add_task.html"></div>
                     <div id="help" class="help view d-none" w3-include-html="templates/readme.html"></div>
                     <div id="dsgvo" class="view container px-0 py-3 d-none" w3-include-html="templates/dsgvo.html"></div>
                     <div id="imprint" class="view container px-0 py-3 d-none" w3-include-html="templates/imprint.html"></div>

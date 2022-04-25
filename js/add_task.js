@@ -1,31 +1,14 @@
-const userss = [
-    {
-        'name': 'Raphael Konopatzki',
-        'mail': 'mail1@mail.de',
-        'img': null
-    },
-    {
-        'name': 'Osman Bilgin',
-        'mail': 'mail2@mail.de',
-        'img': null
-    },
-    {
-        'name': 'Andreas Komor',
-        'mail': 'mail3@mail.de',
-        'img': null
-    }
-];
 
 let usersAdded = [];
 
 
 function addEditor(x) {
     if (x == 'a') {
-        usersAdded.push(userss[0]);
+        usersAdded.push(users[0]);
     } else if (x == 'b') {
-        usersAdded.push(userss[1]);
+        usersAdded.push(users[1]);
     } else if (x == 'c') {
-        usersAdded.push(userss[2]);
+        usersAdded.push(users[2]);
     }
 
     document.getElementById('profile').innerHTML += `
@@ -37,8 +20,9 @@ function disableProfile(x) {
     profile.classList.add('disable');
 }
 
-async function addTask() {
 
+
+async function addTask() {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let category = document.getElementById('category');
@@ -50,9 +34,7 @@ async function addTask() {
     await downloadFromServer();
     tasks = backend.getItem('tasks') || [];
 
-
-
-    task =
+    let task =
     {
         'id': getNewTaskID(),
         'title': title,
@@ -68,11 +50,18 @@ async function addTask() {
 
     tasks.push(task);
     backend.setItem('tasks', tasks);        //backend connection
+    synchronizeData();
 
-
-    alert('Daten gespeichert.');
 
 
 }
 
 
+function cancel(){
+    title = document.getElementById('title').value = ("");
+    description = document.getElementById('description').value = ("");
+    category = document.getElementById('category').value = 0;
+    
+
+
+}

@@ -297,6 +297,10 @@ function openHelp() {
     openView('help');
 }
 
+function openAddTask() {
+    openView('addTask');
+}
+
 
 /**
  * Counts and displays number of backlog and board tasks in nav bar
