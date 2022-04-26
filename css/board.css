@@ -62,7 +62,7 @@ body {
 .task-card {
     display: inline;
     padding: 5px 10px;
-    /* max-width: 90%; */
+    position: relative;
     width: 95%;
     border: 1px solid var(--color-shadow-black);
     border-radius: 5px;
@@ -118,8 +118,8 @@ body {
 
 .img-delete {
     position: absolute;
-    top: 6px;
-    right: 11px;
+    top: 0px;
+    right: 0px;
     height: 20px;
     object-fit: cover;
 }
