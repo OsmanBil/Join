@@ -110,7 +110,7 @@ body {
 }
 
 .emp-status {
-    border: 1px solid var(--color-urgent);
+    border: 1px solid var(--color-urgent-high);
     background-color: rgb(227, 219, 250);
 }
 
