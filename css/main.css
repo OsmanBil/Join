@@ -68,8 +68,9 @@ footer {
     font-size: larger;
 }
 
+
 .backlog, .tasks, .section-dsgvo, .section-imprint, .help {
-    margin-bottom: 60px;
+    margin-bottom: 90px;
 } 
 
 #view-name {

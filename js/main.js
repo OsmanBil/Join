@@ -11,10 +11,11 @@
 /**
  * @typedef {object} task                   - stores a task
 * @property {number} id                     - unique id of a task 
-* @property {string} title                 - task title
+* @property {string} title                  - task title
  * @property {string} description           - task description
  * @property {string} status                - current task status
- * @property {Date} due_date                - deadline for implementation
+ * @property {string} due_date              - deadline for implementation
+ * @property {string} category      - the category the task has to be classified
  * @property {string} urgency       - classification of urgency (values can be retrieved by the global array 'urgencies')
  * @property {Array.<string>} assigned_to   - whom is the task assigned to
  */
@@ -46,6 +47,15 @@
  * @description - Storage for all tasks
  */
 let tasks = [];
+
+
+/**
+ * @global
+ * @type {task}
+ * @name currentTask
+ * @description - curent selected task
+ */
+let currentTask = {};
 
 /**
  * stores possible status of a task

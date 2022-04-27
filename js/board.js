@@ -19,7 +19,7 @@ function showTasksOnBoard() {
         boardSection.innerHTML = '';    //delete old content
 
         for (const task of filterTasksByStatus(taskStatus[i])) {//iterates through all tasks of current status
-            tmp += renderTaskCard(task, 20, 40);
+            tmp += renderTaskCard(task, 13, 40);
         }
 
         boardSection.innerHTML = tmp; // fill content to board-section
@@ -38,7 +38,10 @@ function showTasksOnBoard() {
 function renderTaskCard(task, limitTitle, limitDescription) {
     return /*html*/`
         <div id="task_${task.id}" class="task-card${setUrgencyColor(task)}" draggable="true" ondragstart="drag(event)">
+            <div>
+            <img class="img-edit point" src="img/edit.svg" alt="edit task" onclick="editTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="edit this task">
             <img class="img-delete point" src="img/delete.png" alt="delete task" onclick="deleteTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="delete this task">
+            </div>
             <p id="title_${task.id}" class="title" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">${(limitTitle) ? task.title.substring(0, limitTitle) + '...' : task.title}</p>
             <p id="desc_${task.id}" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.description}">${(limitDescription) ? task.description.substring(0, limitDescription) + '...' : task.description}</p>
             <div id="assigned_${task.id}" class="assigned">${renderAssignees(task.assigned_to)}</div>
@@ -112,4 +115,87 @@ function drop(ev) {
 function deleteTaskOnBoard(ID) {
     deleteTask(ID);
     showTasksOnBoard();
+}
+
+
+/**
+ * Uses the add task form to edit tasks on kanban board.
+ * @param {number} ID - The ID of the Task to be edited. 
+ */
+function editTaskOnBoard(ID) {
+    currentTask = getTaskFromTaskID(ID); //get task
+    const btnAction = document.getElementById('btn-action');    //reference to action button
+    const btnCancel = document.getElementById('btn-cancel');    //reference to cancel button
+
+    //initialize task data
+    initTaskFields();
+
+    btnAction.innerHTML = "Update Task";    //update action button
+    btnAction.onclick = updateTask; // assign new click event for action button
+    btnCancel.onclick = openBoard;  // assign new click event for cancel button
+
+    openAddTask();  // opens manipulated add task view
+}
+
+
+/**
+ * Initialization of add task form.
+ * @param {task} task - The task whose data is initialized.
+ */
+function initTaskFields() {
+    document.getElementById('title').value = currentTask.title;
+    document.getElementById('startDate').value = currentTask.due_date; //.toISOString().split('T')[0];
+    setDropdownByText('category', currentTask.category);
+    setDropdownByText('urgency', currentTask.urgency);
+    document.getElementById('description').value = currentTask.description;
+}
+
+
+/**
+ * Updates an existing Task.
+ * @param {number} ID - The ID of task to be updated. 
+ */
+function updateTask(ID) {
+    tasks[tasks.indexOf(currentTask)] = generateTask(); // update task
+    currentTask = undefined;    // empty currentTask
+    synchronizeData();  // refresh data in storage
+    openBoard();    // back to kanban board
+}
+
+/**
+ * Generates a task that consists of current entries in add task form
+ * @returns {task} - Task that consists of current entries in add task form
+ */
+function generateTask() {
+    const category = document.getElementById('category');
+    const urgency = document.getElementById('urgency');
+
+    return {
+        'id': currentTask.id,
+        'title': document.getElementById('title').value,
+        'description': document.getElementById('description').value,
+        'category': category.options[category.selectedIndex].text,
+        'status': currentTask.status,
+        'due_date': document.getElementById('startDate').value,
+        'urgency': urgency.options[urgency.selectedIndex].text,
+        'assigned_to': currentTask.assigned_to
+    };
+}
+
+
+/**
+ * Sets an option of a <select> element.
+ * @param {string} elementID - Element ID of the dropdown element (<select>). 
+ * @param {string} text - The text of the option to be selected.
+ * @returns 
+ */
+function setDropdownByText(elementID, text) {
+    let ddl = document.getElementById(elementID);
+
+    for (const option of Array.from(ddl.options)) {
+        if (option.text == text) {
+            option.selected = true;
+            return;
+        }
+    }
 }
