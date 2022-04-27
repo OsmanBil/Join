@@ -61,12 +61,16 @@ footer {
 
 .nav-link {
     color: white !important;
-    padding: 6px 10px;
+    padding: 6px 6px;
 }
 
 .nav-link:hover {
     font-size: larger;
 }
+
+.backlog, .tasks, .section-dsgvo, .section-imprint, .help {
+    margin-bottom: 60px;
+} 
 
 #view-name {
     font-size: 1.3rem;
