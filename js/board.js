@@ -80,13 +80,13 @@ function drag(ev) {
 
 
 function dragenter(ev) {
-    let targetElement = document.getElementById(ev.target.id);
+    let targetElement = document.getElementById(ev.currentTarget.id);
     targetElement.classList.add('emp-status');
 }
 
 
 function dragleave(ev) {
-    let targetElement = document.getElementById(ev.target.id);
+    let targetElement = document.getElementById(ev.currentTarget.id);
     targetElement.classList.remove('emp-status');
 }
 
