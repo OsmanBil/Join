@@ -15,14 +15,11 @@ body {
 
 .board {
     width: 100%;
-    height: 100vh;
-    /* padding: 3rem 2rem; */
-    /* height: calc(100vh - 30px); */
 }
 
 
 .status-panel {
-    height: calc(100% - 100px);
+    min-height: calc(100% - 150px);
     min-width: 162px;
 }
 
@@ -34,7 +31,6 @@ body {
 
 .status-content {
     width: 100%;
-    height: 100%;
     min-width: 160px;
     display: flex;
     flex-direction: column;
@@ -56,7 +52,6 @@ body {
 }
 
 .tasks {
-    height: 95%;
     display: flex;
     justify-content: center;
 }
@@ -110,8 +105,7 @@ body {
 }
 
 .emp-status {
-    border: 1px solid var(--color-urgent-high);
-    background-color: rgb(227, 219, 250);
+    border: 3px solid var(--color-urgent-high);
 }
 
 .permeable {
