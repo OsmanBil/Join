@@ -93,7 +93,7 @@ function dragleave(ev) {
 
 function drop(ev) {
     ev.preventDefault();
-    const elementIDTarget = ev.target.id;
+    const elementIDTarget = ev.currentTarget.id;
     const targetElement = document.getElementById(elementIDTarget);
 
     if (elementIDTarget.indexOf('status_') > -1 || elementIDTarget === 'link-backlog_0') {
