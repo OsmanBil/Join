@@ -184,10 +184,10 @@ function generateTask() {
 
 
 /**
- * Sets an option of a <select> element.
- * @param {string} elementID - Element ID of the dropdown element (<select>). 
+ * Sets an option of a select element.
+ * @param {string} elementID - Element ID of the dropdown element (select). 
  * @param {string} text - The text of the option to be selected.
- * @returns 
+ * @returns {void}
  */
 function setDropdownByText(elementID, text) {
     let ddl = document.getElementById(elementID);
