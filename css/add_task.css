@@ -63,3 +63,24 @@
 .profile{
     min-height: 54px;
 }
+
+.d-none{
+    display: none;
+}
+
+@media(max-width: 470px) {
+    .buttons{
+    flex-direction: column;
+    }
+
+    .btn{
+    margin-bottom: 8px;
+    }
+
+    .profile img{
+        height: 32px;
+        width: 32px;
+        margin-bottom: 8px;
+    }
+
+}
