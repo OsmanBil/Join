@@ -67,6 +67,42 @@ async function addTask() {
     //  }
       
 
+    if (title == "")
+    {
+    alert("Please input a Title");
+    return false;
+    }
+
+    if (date == 0)
+    {
+    alert("Please select a date");
+    return false;
+    }
+
+    if (category.value == 0)
+    {
+    alert("Please input a category");
+    return false;
+    }
+    
+    if (urgency.value == 0)
+    {
+    alert("Please input a urgency");
+    return false;
+    }
+
+    if (description == "")
+    {
+    alert("Please input a description");
+    return false;
+    }
+
+    if(counter == 0){
+        alert("Please select a user");
+        return false;
+    }
+
+
     await downloadFromServer();
     tasks = backend.getItem('tasks') || [];
 
