@@ -1,7 +1,7 @@
 /**
  * Opens the backlog section
  */
- function openBacklog() {
+function openBacklog() {
     showTasksOnBacklog();
     openView('backlog');
 }
@@ -10,20 +10,20 @@
 /**
  * Show all created tasks on backlog
  */
- function showTasksOnBacklog() {
+function showTasksOnBacklog() {
     let backlogSection = document.getElementById('task-logs-content');
     let tmp = '';
     backlogSection.innerHTML = '';
 
-        for (const task of filterTasksByStatus(taskStatus[0])) {//iterates through all tasks with status 'backlog'
-            tmp += renderTaskLog(task);
-        }
+    for (const task of filterTasksByStatus(taskStatus[0])) {//iterates through all tasks with status 'backlog'
+        tmp += renderTaskLog(task);
+    }
 
-        if (tmp === '') {
-            tmp = '<tr><td class="td-message" colspan="4">There are no tasks in backlog.</td></tr>';
-        }
+    if (tmp === '') {
+        tmp = '<tr><td class="td-message" colspan="4">There are no tasks in backlog.</td></tr>';
+    }
 
-        backlogSection.innerHTML = tmp; // fill content to board-section
+    backlogSection.innerHTML = tmp; // fill content to board-section
 }
 
 

@@ -7,7 +7,6 @@ function openBoard() {
     openView('board');
 }
 
-
 /**
  * Show all tasks on kanban board
  */
