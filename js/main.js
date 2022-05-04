@@ -307,8 +307,12 @@ function openHelp() {
     openView('help');
 }
 
-function openAddTask() {
+function openAddTask(title) {
     openView('addTask');
+
+    if (title) {
+        document.getElementById('view-name').innerHTML = title;
+    }
 }
 
 
