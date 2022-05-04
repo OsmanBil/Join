@@ -2,6 +2,7 @@
  * Opens the kanban board section
  */
 function openBoard() {
+    resetAddTaskForm(); // reset action button in add task form
     showTasksOnBoard();
     openView('board');
 }
@@ -126,15 +127,16 @@ function editTaskOnBoard(ID) {
     currentTask = getTaskFromTaskID(ID); //get task
     const btnAction = document.getElementById('btn-action');    //reference to action button
     const btnCancel = document.getElementById('btn-cancel');    //reference to cancel button
+    const title = 'Update Task';
 
     //initialize task data
     initTaskFields();
 
-    btnAction.innerHTML = "Update Task";    //update action button
+    btnAction.innerHTML = title;    //update action button
     btnAction.onclick = updateTask; // assign new click event for action button
     btnCancel.onclick = openBoard;  // assign new click event for cancel button
 
-    openAddTask();  // opens manipulated add task view
+    openAddTask(title);  // opens manipulated add task view
 }
 
 
@@ -159,8 +161,20 @@ function updateTask(ID) {
     tasks[tasks.indexOf(currentTask)] = generateTask(); // update task
     currentTask = undefined;    // empty currentTask
     synchronizeData();  // refresh data in storage
+    resetAddTaskForm();
     openBoard();    // back to kanban board
 }
+
+
+/**
+ * resets action button and input fields in add task form
+ */
+function resetAddTaskForm() {
+    const btnAction = document.getElementById('btn-action');    //reference to action button
+    btnAction.innerHTML = 'Create Task';
+    cancel();
+}
+
 
 /**
  * Generates a task that consists of current entries in add task form
