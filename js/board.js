@@ -171,7 +171,10 @@ function updateTask(ID) {
  */
 function resetAddTaskForm() {
     const btnAction = document.getElementById('btn-action');    //reference to action button
+    const btnCancel = document.getElementById('btn-cancel');    //reference to cancel button
+    btnAction.onclick = addTask;
     btnAction.innerHTML = 'Create Task';
+    btnCancel.onclick = cancel;
     cancel();
 }
 
@@ -192,7 +195,7 @@ function generateTask() {
         'status': currentTask.status,
         'due_date': document.getElementById('startDate').value,
         'urgency': urgency.options[urgency.selectedIndex].text,
-        'assigned_to': currentTask.assigned_to
+        'assigned_to': [].concat(usersAdded)
     };
 }
 

@@ -89,10 +89,11 @@ async function addTask() {
         'status': taskStatus[0],
         'due_date': date,
         'urgency': urgencyText,
-        'assigned_to': usersAdded
+        'assigned_to': [].concat(usersAdded)
     };
+
     tasks.push(task);
-    backend.setItem('tasks', tasks);        //backend connection
+    // backend.setItem('tasks', tasks);        //backend connection
     synchronizeData();
     cancel();
 }
