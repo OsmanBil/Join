@@ -1,7 +1,9 @@
-
 let usersAdded = [];
 let counter = 0;
 
+/**
+ * Function to add editor to task
+ */
 function addEditor(x) {
     if (x == 'a') {
         usersAdded.push(users[0]);
@@ -14,23 +16,24 @@ function addEditor(x) {
     document.getElementById('profile').innerHTML += `
     <img src="./img/${x}.png">`;
 
-
- 
-counter++;
-if(counter == 3)
-{
-   
-    let plusBtn = document.getElementById('plusBtn').classList.add('d-none');
-
-}
+    counter++;
+    if (counter == 3) {
+        let plusBtn = document.getElementById('plusBtn').classList.add('d-none');
+    }
 }
 
+/**
+ * Function to disable editor profile
+ */
 function disableProfile(x) {
     let profile = document.getElementById(`dropdown${x}`);
     profile.classList.add('disable');
 }
 
-function delEditor(){
+/**
+ * Function to del editor
+ */
+function delEditor() {
     usersAdded.splice(0, usersAdded.length);
 
     let profilea = document.getElementById(`dropdowna`);
@@ -42,17 +45,16 @@ function delEditor(){
     let profilec = document.getElementById(`dropdownc`);
     profilec.classList.remove('disable');
 
-    document.getElementById('profile').innerHTML =` `;
+    document.getElementById('profile').innerHTML = ` `;
 
     counter = 0;
     let plusBtn = document.getElementById('plusBtn').classList.remove('d-none');
-
 }
 
+/**
+ * Function to add a task
+ */
 async function addTask() {
-
-
-
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let category = document.getElementById('category');
@@ -61,47 +63,19 @@ async function addTask() {
     let urgency = document.getElementById('urgency');
     let urgencyText = urgency.options[urgency.selectedIndex].text;
 
-    //if (title == null || "Title...") {
-    //    alert("empty");
-    //  }else{
-    //  }
-      
-
-    if (title == "")
-    {
-    alert("Please input a Title");
-    return false;
-    }
-
-    if (date == 0)
-    {
-    alert("Please select a date");
-    return false;
-    }
-
-    if (category.value == 0)
-    {
-    alert("Please input a category");
-    return false;
-    }
-    
-    if (urgency.value == 0)
-    {
-    alert("Please input a urgency");
-    return false;
-    }
-
-    if (description == "")
-    {
-    alert("Please input a description");
-    return false;
-    }
-
-    if(counter == 0){
-        alert("Please select a user");
+    if (title == "") { alert("Please input a Title");
         return false;
-    }
-
+    } else if (date == 0) { alert("Please select a date");
+        return false;
+    } else if (category.value == 0) { alert("Please input a category");
+        return false;
+    } else if (urgency.value == 0) { alert("Please input a urgency");
+        return false;
+    } else if (description == "") { alert("Please input a description");
+        return false;
+    } else if (counter == 0) { alert("Please select a user");
+        return false;
+    } 
 
     await downloadFromServer();
     tasks = backend.getItem('tasks') || [];
@@ -117,26 +91,21 @@ async function addTask() {
         'urgency': urgencyText,
         'assigned_to': usersAdded
     };
-
-
-
     tasks.push(task);
     backend.setItem('tasks', tasks);        //backend connection
     synchronizeData();
-
-
     cancel();
-
 }
 
-
-function cancel(){
+/**
+ * Function to cancel formular
+ */
+function cancel() {
     title = document.getElementById('title').value = ("");
     description = document.getElementById('description').value = ("");
     category = document.getElementById('category').value = 0;
     urgency = document.getElementById('urgency').value = 0;
     date = document.getElementById('startDate').value = ("");
     delEditor();
-
-
 }
+
