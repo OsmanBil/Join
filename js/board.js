@@ -76,11 +76,15 @@ function allowDrop(ev) {
 
 function drag(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
+    console.log(window.innerWidth);
+    if (window.innerWidth < 850) {
+        displayElement('context-status');
+    }
 }
 
 
 function dragenter(ev) {
-    let targetElement = document.getElementById(ev.currentTarget.id);
+    let targetElement = document.getElementById((window.innerWidth < 850) ? ev.Target.id : ev.currentTarget.id);
     targetElement.classList.add('emp-status');
 }
 
@@ -95,6 +99,10 @@ function drop(ev) {
     ev.preventDefault();
     const elementIDTarget = ev.currentTarget.id;
     const targetElement = document.getElementById(elementIDTarget);
+
+    if (window.innerWidth < 850) {
+        hideElement('context-status');
+    }
 
     if (elementIDTarget.indexOf('section_') > -1 || elementIDTarget === 'link-backlog_0') {
         const elementIDSource = ev.dataTransfer.getData('text');

@@ -21,6 +21,7 @@ body {
 .status-panel {
     min-height: calc(100% - 150px);
     min-width: 162px;
+    border: 3px solid white;
 }
 
 
@@ -36,6 +37,29 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+.context-status {
+    position: fixed;
+    top: 150px;
+    right: 2px;
+    min-width: 200px;
+    border: 3px solid blue;
+    animation: appear 500ms ease-in-out;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.status {
+    text-align: center;
 }
 
 .row {
@@ -60,10 +84,10 @@ body {
     display: inline;
     padding: 5px 10px;
     position: relative;
-    width: 95%;
+    width: 90%;
     border: 1px solid var(--color-shadow-black);
     border-radius: 5px;
-    box-shadow: 3px 3px 3px var(--color-shadow-black);
+    box-shadow: 3px 3px 10px var(--color-shadow-black);
     font-size: smaller;
     margin-bottom: 4px;
     background-color: var(--color-nonurgent);

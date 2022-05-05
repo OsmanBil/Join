@@ -5,10 +5,10 @@ body {
 }
 
 footer {
-    position: fixed;
+    /* position: fixed;
     bottom: 0;
     left: 0px;
-    right: 0;
+    right: 0; */
     min-height: 30px;
     padding: 5px 10px;
     display: flex;
@@ -62,10 +62,11 @@ footer {
 .nav-link {
     color: white !important;
     padding: 6px 6px;
+    border-left: 5px solid transparent;
 }
 
 .nav-link:hover {
-    font-size: larger;
+    border-left: 5px solid white !important;
 }
 
 
@@ -79,7 +80,7 @@ footer {
 }
 
 .nav-active {
-    border-left: 6px solid white !important;
+    border-left: 5px solid white;
 }
 
 .section-dsgvo, .section-imprint {
