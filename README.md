@@ -33,8 +33,8 @@ Please click on button **Create Task** to add task.
 ### 2. Backlog
 > A new added Task appears in backlog first.
 > You have an overwiev of all new tasks here.
-- To move the task to next phase, please click on **Keep** button.
-- If refuse the task, delete this task by clicking on **Discard** button.
+- To move the task to next phase, please click on **to Board** button.
+- If refuse the task, delete this task by clicking on **Delete** button.
 
 
 ### 3. Board

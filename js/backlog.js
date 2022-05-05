@@ -36,8 +36,8 @@ function renderTaskLog(task) {
     return /*html*/`
        <tr id="task-log_${task.id}" class="task-log">
             <td class="action">
-                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deteleTaskLog(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Discard</button>
-                <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="This task will be kept and moved to board (todo section).">Keep</button>
+                <button type="button" class="btn btn-danger btn-sm my-1" onclick="deteleTaskLog(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Delete</button>
+                <button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="This task will be kept and moved to board (todo section).">to Board</button>
             </td>
             <td class="assignees">
                 ${renderAssignees(task.assigned_to)}
@@ -46,7 +46,7 @@ function renderTaskLog(task) {
             ${task.category}
             </td>
             <td class="details" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">
-            ${task.description}
+            ${'<i><b>title:</b></i><br>' + task.title + '<hr><i><b>description:</b></i><br>' + task.description}
             </td>
         </tr>
     `;
