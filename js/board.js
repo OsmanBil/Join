@@ -37,7 +37,7 @@ function showTasksOnBoard() {
  */
 function renderTaskCard(task, limitTitle, limitDescription) {
     return /*html*/`
-        <div id="task_${task.id}" class="task-card${setUrgencyColor(task)}" draggable="true" ondragstart="drag(event)">
+        <div id="task_${task.id}" class="task-card" draggable="true" ondragstart="drag(event)">
             <div>
             <img class="img-edit point" src="img/edit.svg" alt="edit task" onclick="editTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="edit this task">
             <img class="img-delete point" src="img/delete.png" alt="delete task" onclick="deleteTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="delete this task">
@@ -45,27 +45,9 @@ function renderTaskCard(task, limitTitle, limitDescription) {
             <p id="title_${task.id}" class="title" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">${(limitTitle) ? task.title.substring(0, limitTitle) + '...' : task.title}</p>
             <p id="desc_${task.id}" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.description}">${(limitDescription) ? task.description.substring(0, limitDescription) + '...' : task.description}</p>
             <div id="assigned_${task.id}" class="assigned">${renderAssignees(task.assigned_to)}</div>
+            <div class="urgency-light ${task.urgency.toLowerCase()}" data-bs-toggle="tooltip" data-bs-placement="top" title="${'urgency: ' + task.urgency}"></div>
         </div>
     `;
-}
-
-
-/**
- * Determines which color a task on board should have dependent on the task urgency.
- * @param {task} task - Current task to be colored.
- * @returns {string} - Returns the particular css class to color a task on board.
- */
-function setUrgencyColor(task) {
-    switch (task.urgency) {
-        case urgencies[0]:
-            return ' urgent-low'
-        case urgencies[1]:
-            return ' urgent-middle'
-        case urgencies[2]:
-            return ' urgent-high'
-        default:
-            return '';
-    }
 }
 
 

@@ -58,6 +58,24 @@ body {
     }
 }
 
+.urgency-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+}
+
+.low {
+    background-color: rgb(139, 215, 139);
+}
+
+.middle {
+    background-color: rgb(221, 221, 111);
+}
+
+.high {
+    background-color: rgb(229, 139, 139);
+}
+
 .status {
     text-align: center;
 }
