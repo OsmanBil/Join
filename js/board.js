@@ -58,21 +58,28 @@ function allowDrop(ev) {
 
 function drag(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
-    console.log(window.innerWidth);
+    
     if (window.innerWidth < 850) {
         displayElement('context-status');
     }
 }
 
 
+function getEventTargetID(event) {
+    return (window.innerWidth < 850) ? event.target.id : event.currentTarget.id
+}
+
+
 function dragenter(ev) {
-    let targetElement = document.getElementById((window.innerWidth < 850) ? ev.Target.id : ev.currentTarget.id);
+    // console.log('target', ev.target.id);
+    // console.log('currentTarget', ev.currentTarget.id);
+    let targetElement = document.getElementById(getEventTargetID(ev));
     targetElement.classList.add('emp-status');
 }
 
 
 function dragleave(ev) {
-    let targetElement = document.getElementById(ev.currentTarget.id);
+    let targetElement = document.getElementById(getEventTargetID(ev));
     targetElement.classList.remove('emp-status');
 }
 
@@ -86,7 +93,7 @@ function drop(ev) {
         hideElement('context-status');
     }
 
-    if (elementIDTarget.indexOf('section_') > -1 || elementIDTarget === 'link-backlog_0') {
+    if (elementIDTarget.indexOf('section_') > -1 || elementIDTarget.indexOf('context_') > -1 || elementIDTarget === 'link-backlog_0') {
         const elementIDSource = ev.dataTransfer.getData('text');
 
         getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
