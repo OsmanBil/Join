@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /img/
+Disallow: /js/
+Disallow: /smallest_backend_ever/
+Disallow: /templates/
+Disallow: /README.md
