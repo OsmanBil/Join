@@ -35,7 +35,6 @@ function openBoard() {
     openView('board');
 }
 
-
 /**
  * Show all tasks on kanban board
  */
@@ -66,35 +65,17 @@ function showTasksOnBoard() {
  */
 function renderTaskCard(task, limitTitle, limitDescription) {
     return /*html*/`
-        &lt;div id="task_${task.id}" class="task-card${setUrgencyColor(task)}" draggable="true" ondragstart="drag(event)">
+        &lt;div id="task_${task.id}" class="task-card" draggable="true" ondragstart="drag(event)">
             &lt;div>
             &lt;img class="img-edit point" src="img/edit.svg" alt="edit task" onclick="editTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="edit this task">
-            &lt;img class="img-delete point" src="img/delete.png" alt="delete task" onclick="deleteTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="delete this task">
+            &lt;img class="img-delete point" src="img/delete.svg" alt="delete task" onclick="deleteTaskOnBoard(${task.id})" data-bs-toggle="tooltip" data-bs-placement="right" title="delete this task">
             &lt;/div>
             &lt;p id="title_${task.id}" class="title" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">${(limitTitle) ? task.title.substring(0, limitTitle) + '...' : task.title}&lt;/p>
             &lt;p id="desc_${task.id}" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.description}">${(limitDescription) ? task.description.substring(0, limitDescription) + '...' : task.description}&lt;/p>
             &lt;div id="assigned_${task.id}" class="assigned">${renderAssignees(task.assigned_to)}&lt;/div>
+            &lt;div class="urgency-light ${task.urgency.toLowerCase()}" data-bs-toggle="tooltip" data-bs-placement="top" title="${'urgency: ' + task.urgency}">&lt;/div>
         &lt;/div>
     `;
-}
-
-
-/**
- * Determines which color a task on board should have dependent on the task urgency.
- * @param {task} task - Current task to be colored.
- * @returns {string} - Returns the particular css class to color a task on board.
- */
-function setUrgencyColor(task) {
-    switch (task.urgency) {
-        case urgencies[0]:
-            return ' urgent-low'
-        case urgencies[1]:
-            return ' urgent-middle'
-        case urgencies[2]:
-            return ' urgent-high'
-        default:
-            return '';
-    }
 }
 
 
@@ -105,17 +86,28 @@ function allowDrop(ev) {
 
 function drag(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
+    
+    if (window.innerWidth &lt; 850) {
+        displayElement('context-status');
+    }
+}
+
+
+function getEventTargetID(event) {
+    return (window.innerWidth &lt; 850) ? event.target.id : event.currentTarget.id
 }
 
 
 function dragenter(ev) {
-    let targetElement = document.getElementById(ev.currentTarget.id);
+    // console.log('target', ev.target.id);
+    // console.log('currentTarget', ev.currentTarget.id);
+    let targetElement = document.getElementById(getEventTargetID(ev));
     targetElement.classList.add('emp-status');
 }
 
 
 function dragleave(ev) {
-    let targetElement = document.getElementById(ev.currentTarget.id);
+    let targetElement = document.getElementById(getEventTargetID(ev));
     targetElement.classList.remove('emp-status');
 }
 
@@ -125,7 +117,11 @@ function drop(ev) {
     const elementIDTarget = ev.currentTarget.id;
     const targetElement = document.getElementById(elementIDTarget);
 
-    if (elementIDTarget.indexOf('section_') > -1 || elementIDTarget === 'link-backlog_0') {
+    if (window.innerWidth &lt; 850) {
+        hideElement('context-status');
+    }
+
+    if (elementIDTarget.indexOf('section_') > -1 || elementIDTarget.indexOf('context_') > -1 || elementIDTarget === 'link-backlog_0') {
         const elementIDSource = ev.dataTransfer.getData('text');
 
         getTaskFromTaskID(elementIDSource)['status'] = taskStatus[getIndexFromElementID(elementIDTarget)];
@@ -199,7 +195,10 @@ function updateTask(ID) {
  */
 function resetAddTaskForm() {
     const btnAction = document.getElementById('btn-action');    //reference to action button
+    const btnCancel = document.getElementById('btn-cancel');    //reference to cancel button
+    btnAction.onclick = addTask;
     btnAction.innerHTML = 'Create Task';
+    btnCancel.onclick = cancel;
     cancel();
 }
 
@@ -220,7 +219,7 @@ function generateTask() {
         'status': currentTask.status,
         'due_date': document.getElementById('startDate').value,
         'urgency': urgency.options[urgency.selectedIndex].text,
-        'assigned_to': currentTask.assigned_to
+        'assigned_to': [].concat(usersAdded)
     };
 }
 
@@ -250,13 +249,13 @@ function setDropdownByText(elementID, text) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#categories">categories</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#currentTask">currentTask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#editTaskOnBoard">editTaskOnBoard</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#generateTask">generateTask</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initTaskFields">initTaskFields</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setDropdownByText">setDropdownByText</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#setUrgencyColor">setUrgencyColor</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#updateTask">updateTask</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEditor">addEditor</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#cancel">cancel</a></li><li><a href="global.html#categories">categories</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#currentTask">currentTask</a></li><li><a href="global.html#delEditor">delEditor</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#disableProfile">disableProfile</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#editTaskOnBoard">editTaskOnBoard</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#generateTask">generateTask</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#getViewToOpen">getViewToOpen</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initTaskFields">initTaskFields</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setDropdownByText">setDropdownByText</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#updateTask">updateTask</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Wed May 04 2022 12:00:41 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 06 2022 12:06:47 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

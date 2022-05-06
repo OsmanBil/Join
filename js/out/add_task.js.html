@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: backlog.js</title>
+    <title>JSDoc: Source: add_task.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: backlog.js</h1>
+    <h1 class="page-title">Source: add_task.js</h1>
 
     
 
@@ -26,80 +26,119 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Opens the backlog section
- */
-function openBacklog() {
-    showTasksOnBacklog();
-    openView('backlog');
-}
-
+            <pre class="prettyprint source linenums"><code>let usersAdded = [];
+let counter = 0;
 
 /**
- * Show all created tasks on backlog
+ * Function to add editor to task
  */
-function showTasksOnBacklog() {
-    let backlogSection = document.getElementById('task-logs-content');
-    let tmp = '';
-    backlogSection.innerHTML = '';
-
-    for (const task of filterTasksByStatus(taskStatus[0])) {//iterates through all tasks with status 'backlog'
-        tmp += renderTaskLog(task);
+function addEditor(x) {
+    if (x == 'a') {
+        usersAdded.push(users[0]);
+    } else if (x == 'b') {
+        usersAdded.push(users[1]);
+    } else if (x == 'c') {
+        usersAdded.push(users[2]);
     }
 
-    if (tmp === '') {
-        tmp = '&lt;tr>&lt;td class="td-message" colspan="4">There are no tasks in backlog.&lt;/td>&lt;/tr>';
+    document.getElementById('profile').innerHTML += `
+    &lt;img src="./img/${x}.png">`;
+
+    counter++;
+    if (counter == 3) {
+        let plusBtn = document.getElementById('plusBtn').classList.add('d-none');
     }
-
-    backlogSection.innerHTML = tmp; // fill content to board-section
 }
 
-
 /**
- * Renders tasks for backlog
- * @param {task} task - a task   
- * @returns {string} - html code that represents a task (for backlog)
+ * Function to disable editor profile
  */
-function renderTaskLog(task) {
-    return /*html*/`
-       &lt;tr id="task-log_${task.id}" class="task-log">
-            &lt;td class="action">
-                &lt;button type="button" class="btn btn-danger btn-sm my-1" onclick="deteleTaskLog(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="delete this task">Delete&lt;/button>
-                &lt;button type="button" class="btn btn-success btn-sm my-1" onclick="keepTask(${task.id})" data-bs-toggle="tooltip" data-bs-placement="top" title="This task will be kept and moved to board (todo section).">to Board&lt;/button>
-            &lt;/td>
-            &lt;td class="assignees">
-                ${renderAssignees(task.assigned_to)}
-            &lt;/td>
-            &lt;td class="category">
-            ${task.category}
-            &lt;/td>
-            &lt;td class="details" data-bs-toggle="tooltip" data-bs-placement="top" title="${task.title}">
-            ${'&lt;i>&lt;b>title:&lt;/b>&lt;/i>&lt;br>' + task.title + '&lt;hr>&lt;i>&lt;b>description:&lt;/b>&lt;/i>&lt;br>' + task.description}
-            &lt;/td>
-        &lt;/tr>
-    `;
+function disableProfile(x) {
+    let profile = document.getElementById(`dropdown${x}`);
+    profile.classList.add('disable');
 }
 
-
 /**
- * Deletes task directly on backlog.
- * @param {number} ID - The ID of the Task to be deleted.
+ * Function to del editor
  */
-function deteleTaskLog(ID) {
-    deleteTask(ID);
-    showTasksOnBacklog();
+function delEditor() {
+    usersAdded.splice(0, usersAdded.length);
+
+    let profilea = document.getElementById(`dropdowna`);
+    profilea.classList.remove('disable');
+
+    let profileb = document.getElementById(`dropdownb`);
+    profileb.classList.remove('disable');
+
+    let profilec = document.getElementById(`dropdownc`);
+    profilec.classList.remove('disable');
+
+    document.getElementById('profile').innerHTML = ` `;
+
+    counter = 0;
+    let plusBtn = document.getElementById('plusBtn').classList.remove('d-none');
 }
 
-
 /**
- * Moves a task to the status 'todo'
- * @param {number} ID - The ID of the task to be moved to next status
+ * Function to add a task
  */
-function keepTask(ID) {
-    getTaskFromTaskID(ID)['status'] = taskStatus[1];   // move task to status 'todo'
+async function addTask() {
+    let title = document.getElementById('title').value;
+    let description = document.getElementById('description').value;
+    let category = document.getElementById('category');
+    let categoryText = category.options[category.selectedIndex].text;
+    let date = document.getElementById('startDate').value;
+    let urgency = document.getElementById('urgency');
+    let urgencyText = urgency.options[urgency.selectedIndex].text;
+
+    if (title == "") { alert("Please input a Title");
+        return false;
+    } else if (date == 0) { alert("Please select a date");
+        return false;
+    } else if (category.value == 0) { alert("Please input a category");
+        return false;
+    } else if (urgency.value == 0) { alert("Please input a urgency");
+        return false;
+    } else if (description == "") { alert("Please input a description");
+        return false;
+    } else if (counter == 0) { alert("Please select a user");
+        return false;
+    } 
+
+    await downloadFromServer();
+    tasks = backend.getItem('tasks') || [];
+
+    let task =
+    {
+        'id': getNewTaskID(),
+        'title': title,
+        'description': description,
+        'category': categoryText,
+        'status': taskStatus[0],
+        'due_date': date,
+        'urgency': urgencyText,
+        'assigned_to': [].concat(usersAdded)
+    };
+
+    tasks.push(task);
+    // backend.setItem('tasks', tasks);        //backend connection
     synchronizeData();
-    showTasksOnBacklog();
-}</code></pre>
+    cancel();
+}
+
+/**
+ * Function to cancel formular
+ */
+function cancel() {
+    title = document.getElementById('title').value = ("");
+    description = document.getElementById('description').value = ("");
+    category = document.getElementById('category').value = 0;
+    urgency = document.getElementById('urgency').value = 0;
+    date = document.getElementById('startDate').value = ("");
+    delEditor();
+}
+
+</code></pre>
         </article>
     </section>
 

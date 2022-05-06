@@ -116,6 +116,10 @@ function init() {
 }
 
 
+/**
+ * This functions determines which view to open.
+ * @returns {function}  - Returns function to open the proper view 
+ */
 function getViewToOpen() {
     if (location.search) {
         switch (location.search.substring(6)) {
@@ -269,8 +273,7 @@ function getTaskFromTaskID(taskIDOrElementID) {
  * @param {string} viewID - ElementID of the view to be displayed. 
  */
 function openView(viewID) {
-    window.history.replaceState(null, document.title, window.location.origin + window.location.pathname + '?page=' + viewID);
-    //window.history.pushState("", document.title, window.location.origin + window.location.pathname + '?page=' + viewID);
+    window.history.replaceState(null, document.title, window.location.origin + window.location.pathname + '?page=' + viewID);   // add a querystring to have a direct access to this page
     let views = document.getElementsByClassName('view');
 
     document.getElementById('view-name').innerHTML = viewID.toUpperCase();    //set title
