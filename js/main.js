@@ -111,9 +111,24 @@ const users = [
 function init() {
     loadTasks();
     includeHTML();
-    setTimeout(openBoard, 200);    //default view is board
+
+    setTimeout(getViewToOpen(), 200);
 }
 
+
+function getViewToOpen() {
+    if (location.search) {
+        switch (location.search.substring(6)) {
+            case 'backlog':
+                return openBacklog;
+            case 'addTask':
+                return openAddTask;
+            case 'help':
+               return openHelp;
+        }
+    }
+    return openBoard;    //default view is board
+}
 
 /**
  * Loads stored tasks from backend server
@@ -254,6 +269,8 @@ function getTaskFromTaskID(taskIDOrElementID) {
  * @param {string} viewID - ElementID of the view to be displayed. 
  */
 function openView(viewID) {
+    window.history.replaceState(null, document.title, window.location.origin + window.location.pathname + '?page=' + viewID);
+    //window.history.pushState("", document.title, window.location.origin + window.location.pathname + '?page=' + viewID);
     let views = document.getElementsByClassName('view');
 
     document.getElementById('view-name').innerHTML = viewID.toUpperCase();    //set title
