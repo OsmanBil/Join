@@ -1,64 +1,57 @@
-
-    <div class="container">
+<div class="container">
+    <span class="legend">* required field</span>
+    <form onsubmit="addTask()">
         <div class="card">
             <div class="card-body bg-grey">
-
                 <div class="card-row">
                     <div class="card-unit">
                         <h5 class="card-title blue">Title</h5>
                         <div class="card-in">
-                            <input id="title" type="text" class="form-control" placeholder="Title..." >
+                            <input id="title" type="text" class="input-field form-control"
+                                placeholder="Title..." required minlength="5">
+                                <span></span>
                         </div>
                     </div>
-
                     <div class="card-unit">
                         <h5 class="card-title blue">Due Date</h5>
                         <div class="card-in">
-                            <input id="startDate" class="form-control" type="date" />
+                            <input id="startDate" class="input-field form-control" type="date" required pattern="(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})">
                             <span id="startDateSelected"></span>
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="card-row">
                     <div class="card-unit">
                         <h5 class="card-title blue">Category</h5>
                         <div class="card-in">
-                            <select class="form-select" id="category">
-                                <option selected value="0">Choose...</option>
-                                <option value="1">Marketing</option>
+                            <select class="input-field form-select" id="category" placeholder="Choose category">
+                                <option value="1" selected>Marketing</option>
                                 <option value="2">Product</option>
                                 <option value="3">Sale</option>
                             </select>
+                            <span></span>
                         </div>
                     </div>
-
                     <div class="card-unit">
                         <h5 class="card-title blue">Urgency</h5>
-                        <div class="card-in"> 
-                            <select class="form-select" id="urgency">
-                                <option selected value="0">Choose...</option>
-                                <option value="1">High</option>
+                        <div class="card-in">
+                            <select class="input-field form-select" id="urgency">
+                                <option value="3" selected>Low</option>
                                 <option value="2">Middle</option>
-                                <option value="3">Low</option>
+                                <option value="1">High</option>
                             </select>
+                            <span></span>
                         </div>
                     </div>
                 </div>
-
                 <div class="card-row">
                     <div class="card-unit">
                         <h5 class="card-title blue">Description</h5>
                         <div class="input-group">
-                            <textarea id="description" class="form-control form-hight" aria-label="With textarea"
-                                placeholder="Description..."></textarea>
+                            <textarea id="description" class="input-field form-control form-hight"
+                                aria-label="With textarea" placeholder="Description..."></textarea>
                         </div>
                     </div>
-
-
-
                     <div class="card-unit">
                         <h5 class="card-title blue">Assignet to</h5>
                         <div class="assigned-to" id="assigned-to">
@@ -66,37 +59,35 @@
                             </div>
                             <div class="editor">
                                 <div class="btn-group dropend">
-                                    <button id="plusBtn" type="button" class="no-border dropdown" data-bs-toggle="dropdown">
+                                    <button id="plusBtn" type="button" class="no-border dropdown"
+                                        data-bs-toggle="dropdown">
                                         + </button>
                                     <ul class="dropdown-menu">
                                         <li id="dropdowna"><a onclick="addEditor('a'), disableProfile('a')"
-                                                class="dropdown-item" href="#"><img src="./img/a.png" alt=""></a></li>
+                                                class="dropdown-item" href="#"><img src="./img/a.png" alt=""></a>
+                                        </li>
                                         <li id="dropdownb"><a onclick="addEditor('b'), disableProfile('b')"
-                                                class="dropdown-item" href="#"><img src="./img/b.png" alt=""></a></li>
+                                                class="dropdown-item" href="#"><img src="./img/b.png" alt=""></a>
+                                        </li>
                                         <li id="dropdownc"><a onclick="addEditor('c'), disableProfile('c')"
-                                                class="dropdown-item" href="#"><img src="./img/c.png" alt=""></a></li>
+                                                class="dropdown-item" href="#"><img src="./img/c.png" alt=""></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
                         <div class="buttons">
-                            <button id="btn-cancel" onclick="cancel()" type="button" class="btn btn-primary btn-assignet-to">Cancel</button>
-                            <button id="btn-action" onclick="addTask()" type="button" class="btn btn-primary btn-assignet-to">Create Task</button>
+                            <button id="btn-cancel" onclick="cancel()" type="button"
+                                class="btn btn-primary btn-assignet-to">Cancel</button>
+                            <button id="btn-action" type="submit" class="btn btn-primary btn-assignet-to">Create Task</button>
                         </div>
                     </div>
-
-
-
-
-
                 </div>
-
-
-
-
-
             </div>
         </div>
+    </form>
+    <div id="user-message" class="d-none">
+        <p>Task mit der ID: <span id="TaskID"></span> erfasst.<br>
+        Siehe Backlog</p>
     </div>
-    </div>
+</div>

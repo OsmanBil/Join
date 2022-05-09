@@ -54,7 +54,7 @@ function delEditor() {
 /**
  * Function to add a task
  */
-async function addTask() {
+function addTask() {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let category = document.getElementById('category');
@@ -63,28 +63,28 @@ async function addTask() {
     let urgency = document.getElementById('urgency');
     let urgencyText = urgency.options[urgency.selectedIndex].text;
 
-    if (title == "") { alert("Please input a Title");
-        return false;
-    } else if (date == 0) { alert("Please select a date");
-        return false;
-    } else if (category.value == 0) { alert("Please input a category");
-        return false;
-    } else if (urgency.value == 0) { alert("Please input a urgency");
-        return false;
-    } else if (description == "") { alert("Please input a description");
-        return false;
-    } else if (counter == 0) { alert("Please select a user");
-        return false;
-    } 
+    // // if (title == "") { alert("Please input a Title");
+    // //     return false;
+    // // } else if (date == 0) { alert("Please select a date");
+    // //     return false;
+    // // } else if (category.value == 0) { alert("Please input a category");
+    // //     return false;
+    // // } else if (urgency.value == 0) { alert("Please input a urgency");
+    // //     return false;
+    // // } else if (description == "") { alert("Please input a description");
+    // //     return false;
+    // // } else if (counter == 0) { alert("Please select a user");
+    // //     return false;
+    // // } 
 
-    await downloadFromServer();
-    tasks = backend.getItem('tasks') || [];
+    // await downloadFromServer();
+    // tasks = backend.getItem('tasks') || [];
 
     let task =
     {
         'id': getNewTaskID(),
         'title': title,
-        'description': description,
+        'description': description || '',
         'category': categoryText,
         'status': taskStatus[0],
         'due_date': date,
@@ -96,7 +96,24 @@ async function addTask() {
     // backend.setItem('tasks', tasks);        //backend connection
     synchronizeData();
     cancel();
+
+    showMessage(4000, task.id);
 }
+
+
+/**
+ * Shows an user message if a task could be added/modified.
+ * @param {number} interval - An interval in ms how long to show user message.
+ */
+function showMessage(interval, taskID) {
+    document.getElementById('TaskID').innerHTML = taskID;
+    displayElement('user-message');
+
+    setInterval(() => {
+        hideElement('user-message');
+    }, interval);
+}
+
 
 /**
  * Function to cancel formular
@@ -104,8 +121,8 @@ async function addTask() {
 function cancel() {
     title = document.getElementById('title').value = ("");
     description = document.getElementById('description').value = ("");
-    category = document.getElementById('category').value = 0;
-    urgency = document.getElementById('urgency').value = 0;
+    category = document.getElementById('category').value = 1;
+    urgency = document.getElementById('urgency').value = 3;
     date = document.getElementById('startDate').value = ("");
     delEditor();
 }

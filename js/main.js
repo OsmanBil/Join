@@ -145,28 +145,6 @@ async function loadTasks() {
 }
 
 
-// /**
-//  * 
-//  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
-//  * @example task.id = getNewTaskID();
-//  */
-// function getNewTaskID() {
-//     const tmp = [];
-
-//     if (tasks.length === 0) {   //ID=1 if first task
-//         return 1;
-//     }
-
-//     for (const task of tasks) {
-//             if (task && Number.isInteger(task.id)) { //only if task exists and ID is a number
-//                 tmp.push(Number(task.id));
-//             }
-//     }
-
-//     return Math.max(...tmp) + 1;
-// }
-
-
 /**
  * 
  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)

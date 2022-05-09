@@ -1,10 +1,10 @@
-.card-row{
+.card-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.card-unit{
+.card-unit {
     margin-top: 16px;
     margin-bottom: 16px;
     margin-right: 16px;
@@ -12,72 +12,127 @@
     width: 40%;
 }
 
-.card-in{
+.card-in {
     display: flex;
     flex-direction: row !important;
 }
 
-.bg-grey{
+.bg-grey {
     background-color: rgb(240, 240, 240);
 }
 
-.blue{
+.blue {
     color: rgb(5, 5, 153);
 }
 
-.form-hight{
+.form-hight {
     height: 100px !important;
 }
 
-.no-border{
+.no-border {
     border: none;
 }
 
-.card-unit img{
+.card-unit img {
     height: 54px;
     width: 54px;
     border-radius: 100%;
 }
 
-.assigned-to{
+.assigned-to {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.disable{
+.disable {
     display: none;
 }
 
-.buttons{
+.buttons {
     margin-top: 8px;
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
 }
 
-.btn-assignet-to{
+.btn-assignet-to {
     margin-right: 16px;
     margin-left: 16px;
 }
 
-.profile{
+.profile {
     min-height: 54px;
 }
 
-.d-none{
+.d-none {
     display: none;
 }
 
+.input-field {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+.input-field:required+ ::after {
+    content: "*";
+    color: rgb(187, 11, 11);
+    font-size: x-large;
+}
+
+select:required+ ::after {
+    content: "*";
+    color: rgb(187, 11, 11);
+    font-size: x-large;
+}
+
+.input-field:focus:valid {
+    border: 1px solid rgba(72, 153, 72, 1);
+    background-color: rgba(72, 153, 72, 0.1);
+}
+
+.input-field:focus:invalid {
+    border: 1px solid rgba(197, 101, 101, 1);
+    background-color: rgba(197, 101, 101, 0.1);
+}
+
+.legend {
+    color: rgb(187, 11, 11);
+    ;
+}
+
+#user-message {
+    width: 40%;
+    height: 200px;
+    position: absolute;
+    top: 200px;
+    border: 2px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    background-color: rgba(72, 153, 72, 0.1);
+    color: rgb(37, 102, 37);
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: all 1s ease-in-out;
+}
+
+#TaskID {
+    color: rgb(27, 182, 27);
+}
+
 @media(max-width: 470px) {
-    .buttons{
-    flex-direction: column;
+    .buttons {
+        flex-direction: column;
     }
 
-    .btn{
-    margin-bottom: 8px;
+    .btn {
+        margin-bottom: 8px;
     }
 
-    .profile img{
+    .profile img {
         height: 32px;
         width: 32px;
         margin-bottom: 8px;
