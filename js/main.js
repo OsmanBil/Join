@@ -70,7 +70,7 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
  * @type {Array.<string>}
  * @global
  */
- const urgencies = ['Low', 'Middle', 'High'];
+const urgencies = ['Low', 'Middle', 'High'];
 
 
 /**
@@ -78,7 +78,7 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
  * @type {Array.<string>}
  * @global
  */
- const categories = ['Marketing', 'Product', 'Sale'];
+const categories = ['Marketing', 'Product', 'Sale'];
 
 
 /**
@@ -109,10 +109,31 @@ const users = [
  * Functionality to run if index.html is opened 
  */
 function init() {
+    let newTaskID = localStorage.getItem('newTaskID');  // load the current modified task, if exists
+
     loadTasks();
     includeHTML();
 
-    setTimeout(getViewToOpen(), 200);
+    setTimeout(getViewToOpen, 200);
+
+    if (newTaskID) {   // user message about successfull task mo
+        showMessage(3000, newTaskID);
+    }
+}
+
+
+/**
+ * Shows an user message if a task could be added/modified.
+ * @param {number} interval - An interval in ms how long to show user message.
+ */
+ function showMessage(delay, taskID) {
+    document.getElementById('TaskID').innerHTML = taskID;
+    displayElement('message-frame');
+
+    setTimeout(() => {
+        hideElement('message-frame');
+        localStorage.removeItem('newTaskID');
+    }, delay);
 }
 
 
@@ -121,6 +142,10 @@ function init() {
  * @returns {function}  - Returns function to open the proper view 
  */
 function getViewToOpen() {
+    if (localStorage.getItem('newTaskID')) {
+        return openAddTask;
+    }
+
     if (location.search) {
         switch (location.search.substring(6)) {
             case 'backlog':
@@ -128,7 +153,7 @@ function getViewToOpen() {
             case 'addTask':
                 return openAddTask;
             case 'help':
-               return openHelp;
+                return openHelp;
         }
     }
     return openBoard;    //default view is board
@@ -150,17 +175,17 @@ async function loadTasks() {
  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
  * @example task.id = getNewTaskID();
  */
- function getNewTaskID() {
+function getNewTaskID() {
     let tmp = 0;
     let ID;
 
     for (const task of tasks) {
-            if (task && Number.isInteger(task.id)) { //only if task exists and ID is a number
-                ID = Number(task.id);
-                if (tmp < ID) {
-                    tmp = ID;
-                }
+        if (task && Number.isInteger(task.id)) { //only if task exists and ID is a number
+            ID = Number(task.id);
+            if (tmp < ID) {
+                tmp = ID;
             }
+        }
     }
 
     return (tmp > 0) ? tmp + 1 : 1;
@@ -220,8 +245,8 @@ function filterTasksByStatus(status) {
  */
 function getIndexFromElementID(elementID) {
     if (elementID) {
-    let tmp = elementID.split('_');
-    return +tmp[tmp.length - 1];
+        let tmp = elementID.split('_');
+        return +tmp[tmp.length - 1];
     } else {
         return;
     }
@@ -295,7 +320,7 @@ async function synchronizeData() {
  * Deletes a task
  * @param {number} ID - The ID of the task to be deleted
  */
- function deleteTask(ID) {
+function deleteTask(ID) {
     tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
     synchronizeData();
 }

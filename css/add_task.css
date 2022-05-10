@@ -100,29 +100,6 @@ select:required+ ::after {
     ;
 }
 
-#user-message {
-    width: 40%;
-    height: 200px;
-    position: absolute;
-    top: 200px;
-    border: 2px solid green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(5px);
-    background-color: rgba(72, 153, 72, 0.1);
-    color: rgb(37, 102, 37);
-    font-weight: bold;
-    font-size: 1.5rem;
-    transition: all 1s ease-in-out;
-}
-
-#TaskID {
-    color: rgb(27, 182, 27);
-}
-
 @media(max-width: 470px) {
     .buttons {
         flex-direction: column;

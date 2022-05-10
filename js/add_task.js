@@ -63,23 +63,6 @@ function addTask() {
     let urgency = document.getElementById('urgency');
     let urgencyText = urgency.options[urgency.selectedIndex].text;
 
-    // // if (title == "") { alert("Please input a Title");
-    // //     return false;
-    // // } else if (date == 0) { alert("Please select a date");
-    // //     return false;
-    // // } else if (category.value == 0) { alert("Please input a category");
-    // //     return false;
-    // // } else if (urgency.value == 0) { alert("Please input a urgency");
-    // //     return false;
-    // // } else if (description == "") { alert("Please input a description");
-    // //     return false;
-    // // } else if (counter == 0) { alert("Please select a user");
-    // //     return false;
-    // // } 
-
-    // await downloadFromServer();
-    // tasks = backend.getItem('tasks') || [];
-
     let task =
     {
         'id': getNewTaskID(),
@@ -93,25 +76,10 @@ function addTask() {
     };
 
     tasks.push(task);
-    // backend.setItem('tasks', tasks);        //backend connection
+    localStorage.setItem('newTaskID', task.id);
+    
     synchronizeData();
     cancel();
-
-    showMessage(4000, task.id);
-}
-
-
-/**
- * Shows an user message if a task could be added/modified.
- * @param {number} interval - An interval in ms how long to show user message.
- */
-function showMessage(interval, taskID) {
-    document.getElementById('TaskID').innerHTML = taskID;
-    displayElement('user-message');
-
-    setInterval(() => {
-        hideElement('user-message');
-    }, interval);
 }
 
 
@@ -119,11 +87,11 @@ function showMessage(interval, taskID) {
  * Function to cancel formular
  */
 function cancel() {
-    title = document.getElementById('title').value = ("");
-    description = document.getElementById('description').value = ("");
+    title = document.getElementById('title').value = "";
+    description = document.getElementById('description').value = "";
     category = document.getElementById('category').value = 1;
     urgency = document.getElementById('urgency').value = 3;
-    date = document.getElementById('startDate').value = ("");
+    date = document.getElementById('startDate').value = "";
     delEditor();
 }
 

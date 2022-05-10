@@ -1,13 +1,13 @@
 <div class="container">
     <span class="legend">* required field</span>
-    <form onsubmit="addTask()">
+    <form id="form1" onsubmit="addTask()" method="get" target="_top">
         <div class="card">
             <div class="card-body bg-grey">
                 <div class="card-row">
                     <div class="card-unit">
                         <h5 class="card-title blue">Title</h5>
                         <div class="card-in">
-                            <input id="title" type="text" class="input-field form-control"
+                            <input id="title" type="text" form="form1" class="input-field form-control"
                                 placeholder="Title..." required minlength="5">
                                 <span></span>
                         </div>
@@ -15,7 +15,7 @@
                     <div class="card-unit">
                         <h5 class="card-title blue">Due Date</h5>
                         <div class="card-in">
-                            <input id="startDate" class="input-field form-control" type="date" required pattern="(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})">
+                            <input id="startDate" form="form1" class="input-field form-control" type="date" required pattern="(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})">
                             <span id="startDateSelected"></span>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                     <div class="card-unit">
                         <h5 class="card-title blue">Category</h5>
                         <div class="card-in">
-                            <select class="input-field form-select" id="category" placeholder="Choose category">
+                            <select class="input-field form-select" id="category" form="form1" placeholder="Choose category">
                                 <option value="1" selected>Marketing</option>
                                 <option value="2">Product</option>
                                 <option value="3">Sale</option>
@@ -35,7 +35,7 @@
                     <div class="card-unit">
                         <h5 class="card-title blue">Urgency</h5>
                         <div class="card-in">
-                            <select class="input-field form-select" id="urgency">
+                            <select class="input-field form-select" id="urgency" form="form1">
                                 <option value="3" selected>Low</option>
                                 <option value="2">Middle</option>
                                 <option value="1">High</option>
@@ -48,7 +48,7 @@
                     <div class="card-unit">
                         <h5 class="card-title blue">Description</h5>
                         <div class="input-group">
-                            <textarea id="description" class="input-field form-control form-hight"
+                            <textarea id="description" form="form1" class="input-field form-control form-hight"
                                 aria-label="With textarea" placeholder="Description..."></textarea>
                         </div>
                     </div>
@@ -77,17 +77,13 @@
                             </div>
                         </div>
                         <div class="buttons">
-                            <button id="btn-cancel" onclick="cancel()" type="button"
+                            <button id="btn-cancel" onclick="cancel()" type="button" form="form1"
                                 class="btn btn-primary btn-assignet-to">Cancel</button>
-                            <button id="btn-action" type="submit" class="btn btn-primary btn-assignet-to">Create Task</button>
+                            <button id="btn-action" type="submit" form="form1" class="btn btn-primary btn-assignet-to">Create Task</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
-    <div id="user-message" class="d-none">
-        <p>Task mit der ID: <span id="TaskID"></span> erfasst.<br>
-        Siehe Backlog</p>
-    </div>
 </div>
