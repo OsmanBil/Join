@@ -54,7 +54,9 @@ function delEditor() {
 /**
  * Function to add a task
  */
-function addTask() {
+function addTask(ev) {
+    ev.preventDefault();
+
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let category = document.getElementById('category');
@@ -80,6 +82,8 @@ function addTask() {
     
     synchronizeData();
     cancel();
+
+    showMessage(3000, task.id);
 }
 
 
@@ -95,3 +99,16 @@ function cancel() {
     delEditor();
 }
 
+
+/**
+ * Shows an user message if a task could be added/modified.
+ * @param {number} interval - An interval in ms how long to show user message.
+ */
+ function showMessage(delay, taskID) {
+    document.getElementById('TaskID').innerHTML = taskID;
+    displayElement('message-frame');
+
+    setTimeout(() => {
+        hideElement('message-frame');
+    }, delay);
+}

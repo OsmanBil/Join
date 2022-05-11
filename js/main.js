@@ -115,25 +115,6 @@ function init() {
     includeHTML();
 
     setTimeout(getViewToOpen, 200);
-
-    if (newTaskID) {   // user message about successfull task mo
-        showMessage(3000, newTaskID);
-    }
-}
-
-
-/**
- * Shows an user message if a task could be added/modified.
- * @param {number} interval - An interval in ms how long to show user message.
- */
- function showMessage(delay, taskID) {
-    document.getElementById('TaskID').innerHTML = taskID;
-    displayElement('message-frame');
-
-    setTimeout(() => {
-        hideElement('message-frame');
-        localStorage.removeItem('newTaskID');
-    }, delay);
 }
 
 
@@ -142,10 +123,6 @@ function init() {
  * @returns {function}  - Returns function to open the proper view 
  */
 function getViewToOpen() {
-    if (localStorage.getItem('newTaskID')) {
-        return openAddTask;
-    }
-
     if (location.search) {
         switch (location.search.substring(6)) {
             case 'backlog':
