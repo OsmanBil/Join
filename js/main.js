@@ -126,14 +126,14 @@ function getViewToOpen() {
     if (location.search) {
         switch (location.search.substring(6)) {
             case 'backlog':
-                return openBacklog;
+                return openBacklog();
             case 'addTask':
-                return openAddTask;
+                return openAddTask();
             case 'help':
-                return openHelp;
+                return openHelp();
         }
     }
-    return openBoard;    //default view is board
+    return openBoard();    //default view is board
 }
 
 /**

@@ -2,7 +2,7 @@
  * Opens the kanban board section
  */
 function openBoard() {
-    resetAddTaskForm(); // reset action button in add task form
+    //resetAddTaskForm(); // reset action button in add task form
     showTasksOnBoard();
     openView('board');
 }

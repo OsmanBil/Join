@@ -2,6 +2,9 @@
 body {
     margin: 0;
     font-family: 'PT Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 footer {
@@ -24,10 +27,6 @@ footer {
 
 .license {
     margin: 0.3rem 0;
-}
-
-.card {
-    margin-bottom: 200px;
 }
 
 .card-header {
