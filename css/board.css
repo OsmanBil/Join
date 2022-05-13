@@ -7,12 +7,6 @@
     --color-urgent-high: rgb(210, 195, 255);
 }
 
-body {
-    background-color: var(--bg-color1);
-    height: 100vh;
-    width: 100%;
-}
-
 h6 {
     text-align: center;
     margin-top: 10px;

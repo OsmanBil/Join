@@ -52,40 +52,55 @@ function delEditor() {
 }
 
 /**
- * Function to add a task
+ * Function to modify a task (add or update a task)
  */
-function addTask(ev) {
+function modifyTask(ev) {
     ev.preventDefault();
 
-    let title = document.getElementById('title').value;
-    let description = document.getElementById('description').value;
-    let category = document.getElementById('category');
-    let categoryText = category.options[category.selectedIndex].text;
-    let date = document.getElementById('startDate').value;
-    let urgency = document.getElementById('urgency');
-    let urgencyText = urgency.options[urgency.selectedIndex].text;
+    if (currentTask) {  // in case of update task
+        updateTask();
+    } else {            // in case of add task
+        const userInput = readOutDataInput();
+        const task = generateTask(userInput["title"], userInput["description"], userInput["category"], userInput["date"], userInput["urgency"]);
 
-    let task =
-    {
+        tasks.push(task);
+        localStorage.setItem('newTaskID', task.id);
+        synchronizeData();
+        cancel();
+        showMessage(3000, task.id);
+    }
+}
+
+/**
+ * reads out current user input in add task form 
+ * @returns {object} - returns current user input
+ */
+function readOutDataInput() {
+    const cat = document.getElementById('category');
+    const urg = document.getElementById('urgency');
+
+    return {
+        "title": document.getElementById('title').value,
+        "description": document.getElementById('description').value,
+        "category": cat.options[cat.selectedIndex].text,
+        "date": document.getElementById('startDate').value,
+        "urgency": urg.options[urg.selectedIndex].text
+    };
+}
+
+
+function generateTask(title, description, category, date, urgency) {
+    return {
         'id': getNewTaskID(),
         'title': title,
         'description': description || '',
-        'category': categoryText,
+        'category': category,
         'status': taskStatus[0],
         'due_date': date,
-        'urgency': urgencyText,
+        'urgency': urgency,
         'assigned_to': [].concat(usersAdded)
     };
-
-    tasks.push(task);
-    localStorage.setItem('newTaskID', task.id);
-    
-    synchronizeData();
-    cancel();
-
-    showMessage(3000, task.id);
 }
-
 
 /**
  * Function to cancel formular
@@ -104,7 +119,7 @@ function cancel() {
  * Shows an user message if a task could be added/modified.
  * @param {number} interval - An interval in ms how long to show user message.
  */
- function showMessage(delay, taskID) {
+function showMessage(delay, taskID) {
     document.getElementById('TaskID').innerHTML = taskID;
     displayElement('message-frame');
 

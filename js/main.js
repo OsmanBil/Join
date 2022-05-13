@@ -55,7 +55,7 @@ let tasks = [];
  * @name currentTask
  * @description - curent selected task
  */
-let currentTask = {};
+let currentTask;
 
 /**
  * stores possible status of a task
@@ -107,11 +107,12 @@ const users = [
 
 /**
  * Functionality to run if index.html is opened 
+ * @async
  */
-function init() {
+async function init() {
     let newTaskID = localStorage.getItem('newTaskID');  // load the current modified task, if exists
 
-    loadTasks();
+    await loadTasks();
     includeHTML();
 
     setTimeout(getViewToOpen, 200);

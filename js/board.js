@@ -121,6 +121,7 @@ function deleteTaskOnBoard(ID) {
  */
 function editTaskOnBoard(ID) {
     currentTask = getTaskFromTaskID(ID); //get task
+    const form = document.getElementById('form1');    //reference to form
     const btnAction = document.getElementById('btn-action');    //reference to action button
     const btnCancel = document.getElementById('btn-cancel');    //reference to cancel button
     const title = 'Update Task';
@@ -129,9 +130,6 @@ function editTaskOnBoard(ID) {
     initTaskFields();
 
     btnAction.innerHTML = title;    //update action button
-    btnAction.onclick = updateTask; // assign new click event for action button
-    btnCancel.onclick = openBoard;  // assign new click event for cancel button
-
     openAddTask(title);  // opens manipulated add task view
 }
 
@@ -150,11 +148,10 @@ function initTaskFields() {
 
 
 /**
- * Updates an existing Task.
- * @param {number} ID - The ID of task to be updated. 
+ * Updates an existing Task. 
  */
-function updateTask(ID) {
-    tasks[tasks.indexOf(currentTask)] = generateTask(); // update task
+function updateTask() {
+    tasks[tasks.indexOf(currentTask)] = generateTaskForUpdate(); // update task
     currentTask = undefined;    // empty currentTask
     synchronizeData();  // refresh data in storage
     resetAddTaskForm();
@@ -168,18 +165,16 @@ function updateTask(ID) {
 function resetAddTaskForm() {
     const btnAction = document.getElementById('btn-action');    //reference to action button
     const btnCancel = document.getElementById('btn-cancel');    //reference to cancel button
-    btnAction.onclick = addTask;
     btnAction.innerHTML = 'Create Task';
-    btnCancel.onclick = cancel;
     cancel();
 }
 
 
 /**
- * Generates a task that consists of current entries in add task form
+ * Generates a task for update that consists of current entries in add task form
  * @returns {task} - Task that consists of current entries in add task form
  */
-function generateTask() {
+function generateTaskForUpdate() {
     const category = document.getElementById('category');
     const urgency = document.getElementById('urgency');
 
