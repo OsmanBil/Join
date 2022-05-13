@@ -83,7 +83,7 @@ let tasks = [];
  * @name currentTask
  * @description - curent selected task
  */
-let currentTask = {};
+let currentTask;
 
 /**
  * stores possible status of a task
@@ -98,7 +98,7 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
  * @type {Array.&lt;string>}
  * @global
  */
- const urgencies = ['Low', 'Middle', 'High'];
+const urgencies = ['Low', 'Middle', 'High'];
 
 
 /**
@@ -106,7 +106,7 @@ const taskStatus = ['backlog', 'todo', 'progress', 'testing', 'done'];
  * @type {Array.&lt;string>}
  * @global
  */
- const categories = ['Marketing', 'Product', 'Sale'];
+const categories = ['Marketing', 'Product', 'Sale'];
 
 
 /**
@@ -135,12 +135,15 @@ const users = [
 
 /**
  * Functionality to run if index.html is opened 
+ * @async
  */
-function init() {
-    loadTasks();
+async function init() {
+    let newTaskID = localStorage.getItem('newTaskID');  // load the current modified task, if exists
+
+    await loadTasks();
     includeHTML();
 
-    setTimeout(getViewToOpen(), 200);
+    setTimeout(getViewToOpen, 200);
 }
 
 
@@ -152,14 +155,14 @@ function getViewToOpen() {
     if (location.search) {
         switch (location.search.substring(6)) {
             case 'backlog':
-                return openBacklog;
+                return openBacklog();
             case 'addTask':
-                return openAddTask;
+                return openAddTask();
             case 'help':
-               return openHelp;
+                return openHelp();
         }
     }
-    return openBoard;    //default view is board
+    return openBoard();    //default view is board
 }
 
 /**
@@ -173,44 +176,22 @@ async function loadTasks() {
 }
 
 
-// /**
-//  * 
-//  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
-//  * @example task.id = getNewTaskID();
-//  */
-// function getNewTaskID() {
-//     const tmp = [];
-
-//     if (tasks.length === 0) {   //ID=1 if first task
-//         return 1;
-//     }
-
-//     for (const task of tasks) {
-//             if (task &amp;&amp; Number.isInteger(task.id)) { //only if task exists and ID is a number
-//                 tmp.push(Number(task.id));
-//             }
-//     }
-
-//     return Math.max(...tmp) + 1;
-// }
-
-
 /**
  * 
  * @returns {number} - Returns a new usable TaskID (e.g. for an new task)
  * @example task.id = getNewTaskID();
  */
- function getNewTaskID() {
+function getNewTaskID() {
     let tmp = 0;
     let ID;
 
     for (const task of tasks) {
-            if (task &amp;&amp; Number.isInteger(task.id)) { //only if task exists and ID is a number
-                ID = Number(task.id);
-                if (tmp &lt; ID) {
-                    tmp = ID;
-                }
+        if (task &amp;&amp; Number.isInteger(task.id)) { //only if task exists and ID is a number
+            ID = Number(task.id);
+            if (tmp &lt; ID) {
+                tmp = ID;
             }
+        }
     }
 
     return (tmp > 0) ? tmp + 1 : 1;
@@ -270,8 +251,8 @@ function filterTasksByStatus(status) {
  */
 function getIndexFromElementID(elementID) {
     if (elementID) {
-    let tmp = elementID.split('_');
-    return +tmp[tmp.length - 1];
+        let tmp = elementID.split('_');
+        return +tmp[tmp.length - 1];
     } else {
         return;
     }
@@ -345,7 +326,7 @@ async function synchronizeData() {
  * Deletes a task
  * @param {number} ID - The ID of the task to be deleted
  */
- function deleteTask(ID) {
+function deleteTask(ID) {
     tasks.splice(tasks.indexOf(getTaskFromTaskID(ID)), 1);
     synchronizeData();
 }
@@ -384,13 +365,13 @@ function countTasks() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEditor">addEditor</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#cancel">cancel</a></li><li><a href="global.html#categories">categories</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#currentTask">currentTask</a></li><li><a href="global.html#delEditor">delEditor</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#disableProfile">disableProfile</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#editTaskOnBoard">editTaskOnBoard</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#generateTask">generateTask</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#getViewToOpen">getViewToOpen</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initTaskFields">initTaskFields</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setDropdownByText">setDropdownByText</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#updateTask">updateTask</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEditor">addEditor</a></li><li><a href="global.html#cancel">cancel</a></li><li><a href="global.html#categories">categories</a></li><li><a href="global.html#countTasks">countTasks</a></li><li><a href="global.html#currentTask">currentTask</a></li><li><a href="global.html#delEditor">delEditor</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#deleteTaskOnBoard">deleteTaskOnBoard</a></li><li><a href="global.html#deteleTaskLog">deteleTaskLog</a></li><li><a href="global.html#disableProfile">disableProfile</a></li><li><a href="global.html#displayElement">displayElement</a></li><li><a href="global.html#editTaskOnBoard">editTaskOnBoard</a></li><li><a href="global.html#filterTasksByStatus">filterTasksByStatus</a></li><li><a href="global.html#generateTaskForUpdate">generateTaskForUpdate</a></li><li><a href="global.html#getIndexFromElementID">getIndexFromElementID</a></li><li><a href="global.html#getNewTaskID">getNewTaskID</a></li><li><a href="global.html#getTaskFromTaskID">getTaskFromTaskID</a></li><li><a href="global.html#getViewToOpen">getViewToOpen</a></li><li><a href="global.html#hideElement">hideElement</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initTaskFields">initTaskFields</a></li><li><a href="global.html#keepTask">keepTask</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadTasks">loadTasks</a></li><li><a href="global.html#modifyTask">modifyTask</a></li><li><a href="global.html#openBacklog">openBacklog</a></li><li><a href="global.html#openBoard">openBoard</a></li><li><a href="global.html#openView">openView</a></li><li><a href="global.html#readOutDataInput">readOutDataInput</a></li><li><a href="global.html#renderAssignees">renderAssignees</a></li><li><a href="global.html#renderTaskCard">renderTaskCard</a></li><li><a href="global.html#renderTaskLog">renderTaskLog</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#setDropdownByText">setDropdownByText</a></li><li><a href="global.html#setLinkActive">setLinkActive</a></li><li><a href="global.html#showMessage">showMessage</a></li><li><a href="global.html#showTasksOnBacklog">showTasksOnBacklog</a></li><li><a href="global.html#showTasksOnBoard">showTasksOnBoard</a></li><li><a href="global.html#synchronizeData">synchronizeData</a></li><li><a href="global.html#tasks">tasks</a></li><li><a href="global.html#taskStatus">taskStatus</a></li><li><a href="global.html#updateTask">updateTask</a></li><li><a href="global.html#urgencies">urgencies</a></li><li><a href="global.html#users">users</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 06 2022 12:06:47 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 13 2022 12:52:42 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
